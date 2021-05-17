@@ -1,0 +1,19 @@
+
+
+.m_Td {
+    border:0.000000000001px solid black;
+    padding:5px;
+    color : black;
+    background-color: #F5F7FA;
+    height : 60px;
+  
+}
+
+.table1 {
+    height : 200px;
+    border-collapse: collapse;
+    border-collapse:separate;
+    border-spacing:0 15px;
+}
+
+
