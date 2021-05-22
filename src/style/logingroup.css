@@ -117,6 +117,7 @@ input:focus{
 
 /*groupcard*/
 .Section{
+    color: black;
     width: 472px;
     height: 140px;
     margin: 20px auto;
