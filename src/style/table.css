@@ -9,6 +9,7 @@
 
 .table_line{
     position: absolute;
+
     background-color: #50C1E9;
     width : 1050px;
     height : 2px;
@@ -79,7 +80,25 @@
     color: #FFFFFF;
   }
 
-
+  .mm1:hover {
+    background-color: #5BE7C4;
+    border: 0px;
+    color: white;
+    outline:none;
+  }
+  
+  .mm2:hover {
+    background-color: #5BE7C4;
+    border: 0px;
+    color: white;
+    outline:none;
+  }
+  .mm3:hover {
+    outline:none;
+    background-color: #5BE7C4;
+    border: 0px;
+    color: white;
+  }
   
   .win{
     border: 2px solid #50C1E9;

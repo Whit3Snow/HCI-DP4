@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import '../style/mileage.css';
 import imgfile from '../ranking.PNG';
@@ -6,8 +6,68 @@ import imgfile2 from '../goal.png';
 import imgfile3 from '../1st.PNG';
 import imgfile4 from '../2nd.PNG';
 import imgfile5 from '../3rd.PNG';
+import {db,firebaseApp, firebase} from "../firebase.js"
+
+async function rank(){ 
+    var mileages=[]; 
+    var rankedgroup=[];
+    var b;
+    await db.collection("Groups").get().then((querySnapshot) => {
+        var groupnames=[];
+        //var mileages=[];
+        var order=[];
+        var rank=[];
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            groupnames.push(doc.id);
+            // console.log(doc.id, " => ", doc.data());
+            mileages.push([doc.data().mileage,mileages.length]);
+            order.push(doc.data().mileage)
+            order.sort(function(a, b)  {
+                return b - a;
+              });
+            rank=order.slice(0,6);
+        });
+        var ranking=[];
+        for(var i=0;i<6;i++){
+            for (var j=0;j<mileages.length;j++){
+                if(mileages[j][0]==order[i]) ranking.push(mileages[j][1]);
+            }
+        }
+        //var rankedgroup=[];
+        for(var k=0;k<ranking.length;k++){
+            rankedgroup.push(groupnames[ranking[k]]);
+        }
+        console.log(rankedgroup);
+        //b = rankedgroup;
+        //console.log(b);
+        //return rankedgroup;
+    });
+    //console.log(rankedgroup)
+    //var a = rankedgroup;
+    return [rankedgroup,mileages];
+}
 
 function Mileage(){
+
+    const [ranks, setRanks] = useState([]);
+    const [mileages, setMileages] = useState([]);
+
+    useEffect(() =>{
+        async function fetchAndSetUser() { 
+            const data = await rank();
+            console.log(data)
+            await setRanks(data[0]);
+            await setMileages(data[1]);
+            console.log(ranks)
+           }
+        fetchAndSetUser();
+        // mileage1 = await rank()
+        // console.log(mileage1)
+        // setRanks(mileage1[0])
+        // console.log(ranks)
+    },[])
+    console.log(ranks)
     return(
     <div className="App-header">
         <header className="header">
@@ -48,8 +108,8 @@ function Mileage(){
         <div className="team-name3">YO! YOGA!</div>
         <div className="mileage3">311,200</div>
         <div className="mileage-3">mileage</div>
-        <div className="fourth">&nbsp;&nbsp;&nbsp;4</div>
-        <div className="fifth">&nbsp;&nbsp;&nbsp;5</div>
+        <div className="fourth">&nbsp;&nbsp;&nbsp;4{ranks}</div>
+        <div className="fifth">&nbsp;&nbsp;&nbsp;5{mileages}</div>
         <div className="sixth">&nbsp;&nbsp;&nbsp;6</div>
         </header>     
     </div>

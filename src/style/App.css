@@ -70,6 +70,25 @@
   letter-spacing: 2px;
   color: #6AB09F;
 }
+.M-1:hover {
+  background-color: #5BE7C4;
+  border: 0px;
+  color: white;
+  outline:none;
+}
+
+.M-2:hover {
+  background-color: #5BE7C4;
+  border: 0px;
+  color: white;
+  outline:none;
+}
+.M-3:hover {
+  outline:none;
+  background-color: #5BE7C4;
+  border: 0px;
+  color: white;
+}
 
 .team-name{
   font-size: 60px;

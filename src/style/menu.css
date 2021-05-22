@@ -1,0 +1,48 @@
+.menu{
+    position:absolute;
+    top:0px;
+    left:-400px;
+    width: 400px;
+    height: 640px;
+    background-color: #5BE7C4;
+    border-radius: 12px;
+    
+}
+.list{
+    width: 350px;
+    height: 70px;
+    left: 8px;
+
+    background: #FFFFFF;
+    border-radius: 12px;
+
+    color:#5BE7C4;
+    font-size: 40px;
+    line-height: 70px;
+    text-align: center;
+    margin: 10px auto;
+}
+.list:hover {
+    filter: brightness(80%);
+}
+
+.menu_icon{
+    width: 95px;
+    height: 100px;
+    margin: 20px 15px;
+}
+.icon{
+    width: 95px;
+    height: 15px;
+    background-color: #FFFFFF;
+    border-radius: 13px;
+    margin: 15px auto;
+}
+
+.menubar{
+    position:absolute;
+    top:0px;
+    width: 125px;
+    height: 1000px;
+    background-color: #5BE7C4;
+}

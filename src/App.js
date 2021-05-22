@@ -13,7 +13,7 @@ import {
   BrowserRouter as Router,
   Route,
 } from "react-router-dom";
-import { Map } from 'google-maps-react';
+
 
 
 function App() {

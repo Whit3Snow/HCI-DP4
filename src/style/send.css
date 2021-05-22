@@ -72,6 +72,25 @@
     color: #6AB09F;
     background-color: transparent;
   }
+  .m1:hover {
+    background-color: #5BE7C4;
+    border: 0px;
+    color: white;
+    outline:none;
+  }
+  
+  .m2:hover {
+    background-color: #5BE7C4;
+    border: 0px;
+    color: white;
+    outline:none;
+  }
+  .m3:hover {
+    outline:none;
+    background-color: #5BE7C4;
+    border: 0px;
+    color: white;
+  }
   
   .team-name{
     font-size: 60px;

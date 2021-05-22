@@ -3,6 +3,26 @@
     src: url("../font/Roboto-Regular.ttf") format("truetype");
     font-weight: 200;
   }
+
+  .M1:hover {
+    background-color: #5BE7C4;
+    border: 0px;
+    color: white;
+    outline:none;
+  }
+  
+  .M2:hover {
+    background-color: #5BE7C4;
+    border: 0px;
+    color: white;
+    outline:none;
+  }
+  .M3:hover {
+    outline:none;
+    background-color: #5BE7C4;
+    border: 0px;
+    color: white;
+  }
   
   .App {
     text-align: center;
@@ -136,6 +156,7 @@
   }
 
   #bettinginput{
+    font-size: 17px;
     width: 590px;
     height:40px;
     position:absolute;
@@ -156,6 +177,7 @@
   }
 
   #bettinginput2{
+    font-size: 17px;
     width: 375px;
     height:35px;
     position:absolute;
@@ -174,6 +196,7 @@
     left: 900px; 
   }
   #bettinginput3{
+    font-size: 17px;
     width: 375px;
     height:150px;
     position:absolute;
