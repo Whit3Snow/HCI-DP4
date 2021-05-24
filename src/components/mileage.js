@@ -6,6 +6,7 @@ import imgfile2 from '../goal.png';
 import imgfile3 from '../1st.PNG';
 import imgfile4 from '../2nd.PNG';
 import imgfile5 from '../3rd.PNG';
+import Menubar from './menu';
 
 function Mileage(){
     var size = 1520;
@@ -16,7 +17,7 @@ function Mileage(){
     return(
     <div className="App-header">
         <header className="header">
-        <div className="menu-bar"></div>
+        
         <div className="team-name"> HELLO BADMINTON </div>
         <div className="mileage"> 167,000 </div>
         <div className="m">mileage</div>
@@ -56,6 +57,7 @@ function Mileage(){
         <div className="fourth">&nbsp;&nbsp;&nbsp;4</div>
         <div className="fifth">&nbsp;&nbsp;&nbsp;5</div>
         <div className="sixth">&nbsp;&nbsp;&nbsp;6</div>
+        <Menubar/>
         </header>     
     </div>
     );

@@ -74,6 +74,18 @@ input:focus{
 /*group*/
 
 
+#load{
+    width: 100%;
+    height: 100%;
+    font-size: 40px;
+    text-align: center;
+}
+#load_m{
+    font-size: 80px;
+    font-weight: bold;
+    line-height: 200px;
+}
+
 #local{
     position: absolute;
     font-weight: bold;
@@ -94,7 +106,7 @@ input:focus{
     position: absolute;
     width: 500px;
     height: 600px;
-    left: 1202px;
+    right: 8%;
     top: 240px;
 
     background: #5BE7C4;

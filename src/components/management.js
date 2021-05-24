@@ -6,6 +6,10 @@ import '../style/table.css';
 
 
 const MoviesPage = () =>{
+    var size = 1520;
+    var zoom = window.innerWidth / size 
+
+    document.body.style.zoom = zoom;
     const getMovies = () => {
         const movies = [
         {date: "2000-10-12", groupname: "BADMINTON LOVERS", betting: "10000", state: <><button className = "win">WIN!</button>&nbsp;&nbsp;<button className = "lose">LOSE</button>&nbsp;&nbsp;<button className = "tie">TIE</button></> },

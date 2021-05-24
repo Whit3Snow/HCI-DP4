@@ -4,6 +4,10 @@ import '../style/challenge.css';
 
 
 function Challenge(){
+    var size = 1520;
+    var zoom = window.innerWidth / size 
+
+    document.body.style.zoom = zoom;
     return(
     <div className="App-header">
         <header className="header">
