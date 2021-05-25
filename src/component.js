@@ -9,6 +9,14 @@ import axios from 'axios';
 
 window.$ = window.jQuery = jQuery;  
 
+const list_1 = [];
+const list_2 = [];
+const list_3 = [];
+const list_4 = [];
+const list_5 = [];
+var count_id1 = 101; // firebase
+var count_id2 = 201; // firebase
+
 var isEmpty = 0;
 var x;
 var y;
@@ -142,6 +150,8 @@ function Component(){
     
 }
 
+//----------------------------------------------img upload-------------------------------------------------
+
 function Uploading(){
     if(!isEmpty){
         alert("No Image Upload first");
@@ -155,10 +165,12 @@ function Uploading(){
 
 }
 
+//-----------------------------------------------icon1-----------------------------------------------------
+
 function icon1(){
     const comp = (
         <div id = "stop">
-            <div class = "draggable" id = "draggable">C{"\n"}A{"\n"}T{"\n"}C{"\n"}H</div>
+            <div class = "draggable" id = {count_id1}>C{"\n"}A{"\n"}T{"\n"}C{"\n"}H</div>
             <div class = "delete1" id = "delete1" onClick = {()=>delete1()}>D E L E T E</div>
             <div class = "scoresheet">
                 <div class = "putimg" id = "putimg">
@@ -196,11 +208,14 @@ function icon1(){
     ReactDOM.render(comp, document.getElementById('component1'));
 }
 
+
+
+
 function icon2(){
     const comp = 
         '<div>'+
             '<div class = "a1"></div>'+
-            '<textarea id = "textbox"></textarea>'+
+            '<textarea id = '+count_id1+'></textarea>'+
         '</div>';
 
     
@@ -218,7 +233,7 @@ function delete1(){
 
 
 //---------------------------------------------drag on-----------------------------------------------------
-//---------------------------------------------------------------------------------------------------------
+//---------------------------------------------icon1-----------------------------------------------------
 
 let isDragging = false;
 
@@ -228,7 +243,9 @@ document.addEventListener('mousedown', function(event) {
 
   if (!dragElem) return;
 
-  let dragElement = jQuery("#draggable").parents("div")[0]
+  const getid = dragElem.id;
+
+  let dragElement = jQuery("#" + getid).parents("div")[0]
 
   event.preventDefault();
 
@@ -281,115 +298,7 @@ document.addEventListener('mousedown', function(event) {
     x = dragElement.style.left;
     y = dragElement.style.top;
 
-    console.log(dragElement.id, x, y);
-
-    document.removeEventListener('mousemove', onMouseMove);
-    dragElement.removeEventListener('mouseup', onMouseUp);
-  }
-
-  function moveAt(clientX, clientY) {
-      
-    let newX = clientX - shiftX;
-    let newY = clientY - shiftY;
-
-    let newBottom = newY + dragElement.offsetHeight;
-
-    if (newBottom > document.documentElement.clientHeight) {
-
-      let docBottom = document.documentElement.getBoundingClientRect().bottom;
-
-
-      let scrollY = Math.min(docBottom - newBottom, 10);
-
-      if (scrollY < 0) scrollY = 0;
-
-      window.scrollBy(0, scrollY);
-
-      newY = Math.min(newY, document.documentElement.clientHeight - dragElement.offsetHeight);
-    }
-
-    if (newY < 0) {
-
-      let scrollY = Math.min(-newY, 10);
-      if (scrollY < 0) scrollY = 0;
-
-      window.scrollBy(0, -scrollY);
-
-    }
-
-    if (newX < 0) newX = 0;
-    if (newX > document.documentElement.clientWidth - dragElement.offsetWidth) {
-      newX = document.documentElement.clientWidth - dragElement.offsetWidth;
-    }
-
-    dragElement.style.left = newX + 'px';
-    dragElement.style.top = newY + 'px';
-    
-  }
-
-});
-
-
-document.addEventListener('mousedown', function(event) {
-
-  let dragElem = event.target.closest('.draggable2');
-
-  if (!dragElem) return;
-
-  let dragElement = jQuery("#draggable2").parents("div")[0]
-
-  event.preventDefault();
-
-  dragElement.ondragstart = function() {
-      return false;
-  };
-
-  let coords, shiftX, shiftY;
-
-  startDrag(dragElement, event.clientX, event.clientY);
-
-  function onMouseUp(event) {
-    finishDrag();
-  };
-
-  function onMouseMove(event) {
-    moveAt(event.clientX, event.clientY);
-  }
-
-  function startDrag(element, clientX, clientY) {
-    
-    if(isDragging) {
-      return;
-    }
-    
-    isDragging = true;
-
-    document.addEventListener('mousemove', onMouseMove);
-    element.addEventListener('mouseup', onMouseUp);
-
-    shiftX = clientX - element.getBoundingClientRect().left;
-    shiftY = clientY - element.getBoundingClientRect().top;
-
-
-    element.style.position = 'fixed';
-
-    moveAt(clientX, clientY);
-  };
-
-  function finishDrag() {
-    if(!isDragging) {
-      return;
-    }
-
-    isDragging = false;
-
-    dragElement.style.top = parseInt(dragElement.style.top) + window.pageYOffset + 'px';
-    dragElement.style.position = 'absolute';
-    
-    x = dragElement.style.left;
-    y = dragElement.style.top;
-
-    console.log(dragElement.id, x, y);
+    console.log(getid, x, y);
 
     document.removeEventListener('mousemove', onMouseMove);
     dragElement.removeEventListener('mouseup', onMouseUp);
