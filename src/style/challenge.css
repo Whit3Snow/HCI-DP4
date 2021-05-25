@@ -4,35 +4,6 @@
   font-weight: 200;
 }
 
-.avail_num{
-  border-radius: 7px;
-  background-color: white;
-  color: #50C1E9;
-  font-weight: bolder;
-  font-size: 34px;
-  position: absolute;
-  width:615px;
-  line-height: 80px;
-  height:70px;
-  top:415px;
-  left:125px;
-  font-family: "Roboto";
-  text-align: right;
-}
-
-.avail_line{
-  border-radius: 7px;
-  background-color: #50C1E9;
-  position: absolute;
-  width:597px;
-  line-height: 80px;
-  height:1px;
-  top:485px;
-  left:150px;
-  font-family: "Roboto";
-  text-align: right;
-}
-
 .M1:hover {
   background-color: #5BE7C4;
   border: 0px;

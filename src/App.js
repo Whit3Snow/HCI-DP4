@@ -31,7 +31,7 @@ function App() {
         <Route path="/login" exact component ={Login}/>
         <Route path="/group/:id" exact component = {Group}/>
         <Route path='/main' component={MainPage} />
-        <Route path='/diary' component={DiaryPage} /> 
+        <Route path='/Diary/:id' component={DiaryPage} /> 
         <Route path='/component' component={ComponentPage} />
       </switch>
     </Router>

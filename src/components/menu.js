@@ -1,7 +1,11 @@
 import React, {Component}from 'react';
 import '../style/menu.css';
+import {Link} from 'react-router-dom';
 
-class Menubar extends React.Component{
+//링크 대충 시켜놨는데 저 밑에 줄없애주면 좋을 것 같다...
+
+
+/*class Menubar extends React.Component{
     render(){
         return(
             <div>
@@ -30,14 +34,57 @@ class Menubar extends React.Component{
             </div>
         )
     }
+}*/
+
+class Menubar extends React.Component{
+    
+    render(){
+        const uid=0;//uid받아와야 해서 그냥 이렇게 둠
+        return(
+            <div>
+                <div id= "fake_bar" onClick={()=>menuon()}></div>
+                <div id = "bar">
+                    <div id="menubar">Menu<span onClick={()=>menuout()} style={{position:'absolute', right:"20px"}}>X</span></div>
+                    
+                    <div className="list_m">MAIN
+                        <div className="drop_down">
+                        <Link to = "/main" ><div className="list_sub">Main</div></Link>
+                        </div>
+                    </div>
+                    <div className="list_m"><div>DIARY</div>
+                        <div className="drop_down">
+                            <Link to = "/component" ><div className="list_sub">New Posting</div></Link>
+                            <Link to = "/diary/&" ><div className="list_sub">Diary</div></Link>
+                        </div>
+                    </div>
+                    <div className="list_m">MILEAGE
+                        <div className="drop_down">
+                        <Link to = "/mileage" ><div className="list_sub">Mileage</div></Link>
+                        <Link to = "/challenge" ><div className="list_sub">Challenge</div></Link>
+                        <Link to = "/managenent" ><div className="list_sub">Management</div></Link>
+                        </div>
+                    </div>
+                    <div className="list_m">LOGOUT
+                    <div className="drop_down">
+                        <Link to = "/login" ><div className="list_sub">Logout</div></Link>
+                        <Link to = {"/group/"+uid} ><div className="list_sub">Change Group</div></Link>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        )
+    }
 }
 
 
-function mouseon(id){
-    document.getElementById(id).style.display='';
+function menuon(){
+    document.getElementById('bar').style.left='0px';
+    document.getElementById('fake_bar').style.left='-2%';
 }
-function mouseout(id){
-    document.getElementById(id).style.display= 'none';
+function menuout(){
+    document.getElementById('bar').style.left= '-200px';
+    document.getElementById('fake_bar').style.left='0px';
 }
 
 export default Menubar;

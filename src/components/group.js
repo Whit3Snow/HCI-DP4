@@ -1,17 +1,13 @@
 import React from 'react';
 import '../style/logingroup.css';
-import Mapping from './Map';
+//import Mapping from './Map';
 import {db, firebaseApp, firebase} from '../firebase';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import tree1  from '../tree1.png'
-import tree2  from '../tree2.png'
-import tree3  from '../tree3.png'
-import loading from '../loading.PNG'
 
 var uid;
 var group_info=[];
-var M_MAX = 500000;
+
 /*function get_info(uid){
     var ref;
     var my_groups=[];
@@ -41,11 +37,13 @@ var M_MAX = 500000;
 
 //이유는 모르겠지만 정렬이 안된다 
 function Group(props){
+
     var size = 1900;
     var zoom = window.innerWidth / size 
 
     document.body.style.zoom = zoom;
 
+    console.log("func_start");
     const [load,setLoad]=useState(true);
     if(uid==null)  {console.log(load); uid  = props.match.params.id;}
     useEffect(() => {
@@ -68,27 +66,21 @@ function Group(props){
                         exercise =doc.data()["exercise"];
                         mileage = doc.data()["mileage"];
                     }).then(()=>{
-                        group_info[count]={name:item,exercise:exercise,mileage:mileage};
+                        group_info[count]={name:name,exercise:exercise,mileage:mileage};
                         console.log(group_info);
                         count++;
-                        //if(count==my_groups.length) {setLoad(false);}
+                        if(count==my_groups.length) {setLoad(false);}
                     })
                 }
             })
         }
         get_info(uid);
       }, []);
-      if (load) return (
-      <div id="load" onClick={()=>{setLoad(false)}}>
-          <div id="load_m">LOADING</div>
-          <div>Get Mileage and Grow Trees!!</div>
-          <img src={loading}/>
-          <div>Click!!</div>
-      </div>);
+      if (load) return (<div>Hello</div>);
       else{ console.log("loaded");
         return (
+        <body>
         <div id="all">
-            <Mapping/>
             <div id = "my_group">
                 <div id="header">My Group</div>
                 {
@@ -98,7 +90,7 @@ function Group(props){
                 }
                 <div className="Section" id="add"><div className="center_letter">+Add New Group</div></div>
             </div>
-        </div>)
+        </div></body>)
         }
     /*get_info 이후에 return하기만 하면 해결됨 */
     //setLoad(get_info(uid));
@@ -108,24 +100,16 @@ function Group(props){
 }
 
 class Groupcard extends React.Component{
-    choosetree = (mileage)=>{
-        var section = Math.ceil(mileage*3/M_MAX);
-        console.log(section);
-        if (section==1) return tree1;
-        else if (section==2) return tree2;
-        else return tree3;
-      }
     render(){
         var name = group_info[this.props.number].name;
         var exersize = group_info[this.props.number].exercise;
         var mileage =group_info[this.props.number].mileage;
-        var tree = this.choosetree(mileage);
         return(
             <Link to= {{pathname:'/main',state:{group:name, user:uid}}}>
             <div className = "Section">
                 <div className = "group_tree"></div>
                 <div className = "group_info">
-                    <div className = "name_1">{name}</div>
+                    <div className = "name">{name}</div>
                     <div className = "exercise">Exercise : {exersize}</div>
                     <div>{mileage}M</div>
                 </div>
