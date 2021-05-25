@@ -11,6 +11,7 @@ const MoviesPage = (props) =>{
     var mygroup=props.location.state.group;
     var user=props.location.state.user;
 
+
     async function getch(){
         var groups=[];
         var challenges=[];
@@ -44,10 +45,14 @@ const MoviesPage = (props) =>{
             await setMileages(data[1][0]);
         } 
         fetchAndSetUser();
-    })
+    },[])
     //console.log(mychallenges)
     //console.log(mymileage)
-    
+
+    function numberWithCommas(x) {
+        return (x+"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     var state=[];
     var mystate=[];
     for (var idx=0;idx<mychallenges.length;idx++){
@@ -162,9 +167,9 @@ const MoviesPage = (props) =>{
         }
         else if(mystate[l]=="wait") gg[l].state=<div className="wait">Challenge Sent!</div>
         else if(mystate[l]=="receive") gg[l].state=<div><button className = "win">WIN!</button>&nbsp;&nbsp;<button className = "lose">LOSE</button>&nbsp;&nbsp;<button className = "tie">TIE</button></div>
-        else if(mystate[l]=="win") gg[l].state=<div>win</div>
-        else if(mystate[l]=="lose") gg[l].state=<div>lose</div>
-        else if(mystate[l]=="tie") gg[l].state=<div>tie</div>
+        else if(mystate[l]=="win") gg[l].state=<div className="real_win">WIN!</div>
+        else if(mystate[l]=="lose") gg[l].state=<div className="real_lose">LOSE</div>
+        else if(mystate[l]=="tie") gg[l].state=<div className="real_tie">TIE</div>
     }
 
     const getMovies = () => {
@@ -192,7 +197,7 @@ const MoviesPage = (props) =>{
             <header className = "App-header">
             <div className="menu-bar"></div>
             <div className="team-name"> HELLO BADMINTON </div>
-            <div className="mileage"> {mymileage} </div>
+            <div className="mileage"> {numberWithCommas(mymileage)} </div>
             <div className="m">mileage</div>
             <Link to={{pathname :'./mileage', state : {group: props.location.state.group, user:props.location.state.user}}}><button className="mm1">MILEAGE</button></Link>
             <Link to={{pathname :'./challenge', state : {group: props.location.state.group, user:props.location.state.user}}}><button className="mm2">CHALLENGE</button></Link>
@@ -203,18 +208,18 @@ const MoviesPage = (props) =>{
             <table className="table">
                 <thread>
                     <tr>
-                        <th width = "230">DATE</th>
-                        <th width = "300">Group Name</th>
-                        <th width = "220">Betting Mileage</th>
-                        <th width = "300">State</th>
+                        <th width = "230" className="table_group">DATE</th>
+                        <th width = "300" className="table_group">Group Name</th>
+                        <th width = "220" className="table_group">Betting Mileage</th>
+                        <th width = "300" className="table_state">State</th>
                     </tr>
                 
                 <tbody>
                     {gg.map(movie =>
                         <tr key={movie.id} width = "600">
-                            <td width = "230" text-align = 'center'>{movie.date}</td>
-                            <td width = "300" text-align = 'center'>{movie.withgroup}</td>
-                            <td width = "220" text-align = 'center'>{movie.bet}</td>
+                            <td width = "230" text-align = 'center'className="table_group" >{movie.date}</td>
+                            <td width = "300" text-align = 'center' className="table_group">{movie.withgroup}</td>
+                            <td width = "220" text-align = 'center' className="table_group">{numberWithCommas(movie.bet)}</td>
                             <td width = "300" text-align = 'center'> 
                                 {/* <button> win </button> */}
                                 {/* <select name="cars" id="cars">

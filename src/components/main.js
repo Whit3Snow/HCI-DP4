@@ -47,12 +47,11 @@ function Main(props){
 
 
         return(
-
             <div>
 
             <body class = "all">
                 <img src={ imgTitle} />
-                <h1 class = "title1">Welcome to</h1><h1 class = "title2">Hello Badminton!</h1>
+                <h1 class = "title_1">Welcome to</h1><h1 class = "title_2">Hello Badminton!</h1>
                 <div class = "logout">logout</div>
                 <div class = "group">group</div>
                 <table class = "toTree">
@@ -64,7 +63,7 @@ function Main(props){
                     </tr>
                     </thead>
                     <tbody>
-                    <tr><td class = "mileage">
+                    <tr><td class = "mileage_jun">
                         16200
                     </td></tr>
                     <tr><td class = "tree">
@@ -79,16 +78,16 @@ function Main(props){
                     </td></tr>
                     </thead>
                     <tbody>
-                    <tr><td class = "message">
+                    <tr><td class = "message_jun">
                     Challenge message from...
                     </td></tr>
-                    <tr><td class = "message">
+                    <tr><td class = "message_jun">
                     Challenge message from...
                     </td></tr>
-                    <tr><td class = "message">
+                    <tr><td class = "message_jun">
                     Complete message from...
                     </td></tr>
-                    <tr><td class = "message">
+                    <tr><td class = "message_jun">
                     Challenge message from...
                     </td></tr>
                     </tbody>
@@ -184,7 +183,7 @@ function Main(props){
                     </div>
                     <hr class="month-line"/>
                     <div id = "tables">
-                    <table id = "table" class="table">
+                    <table id = "table" class="table_jun">
                         <thead>
                             <tr class = "week" height = "30px" >
                                 <th class = "Day">SUN</th>
@@ -284,7 +283,7 @@ function Main(props){
 
 function Jan(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
             <thead>
                 <tr class = "week" height = "30px" >
                     <th class = "Day">SUN</th>
@@ -376,7 +375,7 @@ function Jan(){
 
 function Feb(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
             <thead>
                 <tr class = "week" height = "30px" >
                     <th class = "Day">SUN</th>
@@ -468,7 +467,7 @@ function Feb(){
 
 function Mar(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
             <thead>
                 <tr class = "week" height = "30px" >
                     <th class = "Day">SUN</th>
@@ -560,7 +559,7 @@ function Mar(){
 
 function Apr(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
             <thead>
                 <tr class = "week" height = "30px" >
                     <th class = "Day">SUN</th>
@@ -652,7 +651,7 @@ function Apr(){
 
 function May(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -744,7 +743,7 @@ function May(){
 
 function Jun(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -836,7 +835,7 @@ function Jun(){
 
 function Jul(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -928,7 +927,7 @@ function Jul(){
 
 function Aug(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -1020,7 +1019,7 @@ function Aug(){
 
 function Sep(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -1112,7 +1111,7 @@ function Sep(){
 
 function Oct(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -1204,7 +1203,7 @@ function Oct(){
 
 function Nov(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -1296,7 +1295,7 @@ function Nov(){
 
 function Dec(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>

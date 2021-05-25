@@ -71,14 +71,20 @@ function Group(props){
                         group_info[count]={name:item,exercise:exercise,mileage:mileage};
                         console.log(group_info);
                         count++;
-                        if(count==my_groups.length) {setLoad(false);}
+                        //if(count==my_groups.length) {setLoad(false);}
                     })
                 }
             })
         }
         get_info(uid);
       }, []);
-      if (load) return (<img src= {loading} style={{width:"100%"}}></img>);
+      if (load) return (
+      <div id="load" onClick={()=>{setLoad(false)}}>
+          <div id="load_m">LOADING</div>
+          <div>Get Mileage and Grow Trees!!</div>
+          <img src={loading}/>
+          <div>Click!!</div>
+      </div>);
       else{ console.log("loaded");
         return (
         <div id="all">

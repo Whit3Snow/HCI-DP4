@@ -12,7 +12,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {db,firebaseApp, firebase} from "../firebase.js"
+import {db,firebaseApp, firebase} from "../firebase.js";
+import Menubar from './menu';
 
 
 
@@ -35,6 +36,7 @@ function Mileage(props){
                 users.push(doc.data().goal);
             });
         });
+        //console.log([users])
         
         await db.collection("Groups").get().then((querySnapshot) => {
             var groupnames=[];
@@ -73,10 +75,12 @@ function Mileage(props){
             //return rankedgroup;
             
         });
-        //console.log(order)
         
+        var real_my_goals=my_goals.reverse()
+        //console.log(order)
+              
     
-        return [rankedgroup,rank,gm,order,my_goals];
+        return [rankedgroup,rank,gm,order,real_my_goals];
     }
 
     var size = 1474;
@@ -86,8 +90,8 @@ function Mileage(props){
 
     var mygroup=props.location.state.group;
     var user=props.location.state.user;
-    //console.log(mygroup);
-    //console.log(user);
+    console.log(mygroup);
+    console.log(user);
 
     const hstyle = {
         display: "none"
@@ -109,7 +113,7 @@ function Mileage(props){
         async function fetchAndSetUser() { 
             const data = await rank();
             function numberWithCommas(x) {
-                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return (x+"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
             var comma=[];
             for (var i=0;i<6;i++){
@@ -124,6 +128,7 @@ function Mileage(props){
             for (var k=0;k<data[3].length;k++){
                 if(data[3][k]==mm[0]) await setmyR(k+1);
             }
+            console.log(rami);
             await setmyM(numberWithCommas(mm[0]));
             //console.log(data)
             await setN(mm[0]);
@@ -137,7 +142,7 @@ function Mileage(props){
         // //console.log(mileage1)
         // setRanks(mileage1[0])
         // //console.log(ranks)
-    })
+    },[])
     //console.log(ranks)
     //console.log(mileages)
     //console.log(mymileages)

@@ -9,6 +9,15 @@ import { Link } from 'react-router-dom';
 import tree1  from '../tree1.png'
 import tree2  from '../tree2.png'
 import tree3  from '../tree3.png'
+import tree4  from '../tree4.png'
+import tree5  from '../tree5.png'
+import tree6  from '../tree6.png'
+import tree1_mine  from '../tree1_mine.png'
+import tree2_mine  from '../tree2_mine.png'
+import tree3_mine  from '../tree3_mine.png'
+import tree4_mine  from '../tree4_mine.png'
+import tree5_mine  from '../tree5_mine.png'
+import tree6_mine  from '../tree6_mine.png'
 //import fakeStoreLatLngData from './data/generated-data.json';
 //import Hexbin from './Hexbin';
 //수정 금지 (사이즈 건들면 줌인줌아웃 불가능)
@@ -114,12 +123,25 @@ class Mapping extends React.Component {
       })
     }
   };
-  choosetree = (mileage)=>{
-    var section = Math.ceil(mileage*3/M_MAX);
+  choosetree = (mileage,mine)=>{
+    var section = Math.ceil(mileage*6/M_MAX);
     console.log(section);
-    if (section==1) return tree1;
+    if(mine){
+      if (section==1) return tree1_mine;
+    else if (section==2) return tree2_mine;
+    else if (section==3) return tree3_mine;
+    else if (section==4) return tree4_mine;
+    else if (section==5) return tree5_mine;
+    else return tree6_mine;
+    }else{
+      if (section==1) return tree1;
     else if (section==2) return tree2;
-    else return tree3;
+    else if (section==3) return tree3;
+    else if (section==4) return tree4;
+    else if (section==5) return tree5;
+    else return tree6;
+    }
+    
   }
  
   render() {
@@ -142,9 +164,10 @@ class Mapping extends React.Component {
                   <Marker 
                     key = {info.name}
                     id = {i}
-                    onClick={this.onMarkerClick}
+                    onMouseover={this.onMarkerClick}
                     position={info.position}
-                    icon = {this.choosetree(info.mileage)}>
+                    icon = {this.choosetree(info.mileage,info.my)}
+                    >
                   </Marker>
                   )
                 })

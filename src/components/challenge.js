@@ -4,6 +4,7 @@ import '../style/challenge.css';
 import {db,firebaseApp, firebase} from "../firebase.js"
 
 
+
 function Challenge(props){
 
     var size = 1450;
@@ -29,7 +30,11 @@ function Challenge(props){
             console.log("Error getting cached document:", error);
         });
     })
-    
+    function numberWithCommas(x) {
+        return (x+"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    var mileagecomma=numberWithCommas(mileage);
     
 
     const [Bet, setBet] = useState(0)
@@ -57,6 +62,12 @@ function Challenge(props){
         console.log(Contents);
     }
     
+    function reset_btt(e){
+        e.preventDefault();
+        console.log(Bet);
+        setBet("");
+        document.getElementById("bettinginput").focus();
+    }
     
     return(
         
@@ -64,7 +75,7 @@ function Challenge(props){
             <header className="header">
             <div className="menu-bar"></div>
             <div className="team-name">{groupname}</div>
-            <div className="mileage"> {mileage} </div>
+            <div className="mileage"> {mileagecomma} </div>
             <div className="m">mileage</div>
             <Link to={{pathname :'./mileage', state : {group: props.location.state.group, user:props.location.state.user}}}><button className="M1">MILEAGE</button></Link>
         <Link to={{pathname :'./challenge', state : {group: props.location.state.group, user:props.location.state.user}}}><button class ="M2">CHALLENGE</button></Link>
@@ -72,7 +83,7 @@ function Challenge(props){
             
             <div className="warning"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each challenge is 5000 mileages. And if your opponent reject your challenge, you can get it again!</div>
             <div className="available">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mileage available for betting </div>
-            <div className="avail_num">{mileage1} M</div>
+            <div className="avail_num">{numberWithCommas(mileage1)} M</div>
             <div className="avail_line"></div>
             <div className="circle"></div>
             <div className="w">!</div>
@@ -81,13 +92,13 @@ function Challenge(props){
             <div className="circle2"></div>
             <div className="content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Challenge</div>
             <div className="circle3"></div>
-            <button className="reset">RESET</button>
+            <button className="reset" onClick={(e)=>reset_btt(e)}>RESET</button>
             <input type="text" id="bettinginput" value = {Bet} onChange={onBetHandler}/>
             <div className="receiving">Receiving Group</div>
             <input type="text" id="bettinginput2" value = {Rgroup} onChange={onRgroupHandler}/>
             <div className="contents">Contents</div>
             <textarea type="text" id="bettinginput3" value = {Contents} onChange={onContentsHandler}></textarea>
-            <Link to={{pathname :'./check', state : {rgroup: Rgroup,bet: Bet, contents : Contents, groupname : groupname, mileage : mileage}}}><button className="send" onClick = {sendClick}>SEND</button> </Link>
+            <Link to={{pathname :'./check', state : {rgroup:Rgroup, group: groupname,bet: Bet, contents : Contents, mileage : mileage, user:props.location.state.user}}}><button className="send" onClick = {sendClick}>SEND</button> </Link>
             </header>     
         </div>
     );

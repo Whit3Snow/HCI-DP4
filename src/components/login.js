@@ -4,8 +4,15 @@ import {Link, Route, BrowserRouter} from "react-router-dom";
 import {db, firebaseApp, firebase} from '../firebase';
 import man from '../man_run.png';
 import woman from '../woman_run.png';
+import IconButton from "@material-ui/core/IconButton";
+import InputLabel from "@material-ui/core/InputLabel";
+import Visibility from "@material-ui/icons/Visibility";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Input from "@material-ui/core/Input";
 
-function Login (){
+  
+const Login = () => {
     var size = 1900;
     var zoom = window.innerWidth / size 
 
@@ -15,16 +22,21 @@ function Login (){
     const [pw, setPw] = useState("");
     const [error, setError] = useState("");
     const [uid, setUid] = useState(null);
-        
+    const [values, setValues] = React.useState({
+        password: "",
+        showPassword: false,
+      });
+
     const onEmailChange = (evt) => {
         setEmail(evt.target.value);
     }
         
     const onPwChange = (evt) => {
         setPw(evt.target.value);
+        
     }
     const signin = ()=>{
-        firebaseApp.auth().signInWithEmailAndPassword(email, pw)
+        firebaseApp.auth().signInWithEmailAndPassword(email, values.password)
         .then((user) => {
         const uid = (firebaseApp.auth().currentUser || {}).uid
         window.location.href ='/group/'+uid;
@@ -36,22 +48,66 @@ function Login (){
         setError(errorMessage);
         });
     }
-    return(
-        <div>
+
+    const handleClickShowPassword = () => {
+        setValues({ ...values, showPassword: !values.showPassword });
+      };
+      
+      const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+      };
+      
+      const handlePasswordChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+      };
+      function press(f){ 
+          if(f.keyCode == 13){
+            document.getElementById("signin").click();
+          }
+      }
+      document.addEventListener('keydown', press);
+  
+  return(
+    <div>
+        <div className="skew"> asdf  </div>
         <div id="back">
             <div id="workout">WORK OUT TOGETHER</div>
+            
             <div class="box">
+                <div class="box1">
                 <input id="id" type="text" onChange={onEmailChange} value={email}/>
+                </div>
             </div>
+            <div class="letID">ID:</div>
             <div class="box">
-                <input id="pw" type="text" onChange={onPwChange} value={pw}/>
+                <div class="box2">
+                <div>
+                <Input
+                    type={values.showPassword ? "text" : "password"}
+                    onChange={handlePasswordChange("password")}
+                    value={values.password}
+                    style={{fontsize:"100px", letterSpacing:"5px", border:"0"}}
+                    onkeypress="JavaScript:press(this.form)"
+                    endAdornment={
+                    <InputAdornment position="end">
+                        
+                    </InputAdornment>
+                    }
+                />
+                </div>
+                </div>
             </div>
+            <div class="letPW">PW:</div>
             <div id ="signin" onClick ={signin} >Signin</div>
         </div>
-        <img src={man} style={{position:'absolute', left:"20px" ,maxHeight:"900px"}}/>
-        <img src={woman} style={{position:'absolute', left:"60px" ,maxHeight:"1000px"}}/>
-        </div>
-    );
-}
+        <div className="pwline2"></div>
+        <div className="pwline"></div>
+        <img src={man} style={{position:'absolute', left:"1%" ,maxHeight:"900px"}}/>
+        <img src={woman} style={{position:'absolute', left:"10%" ,maxHeight:"1000px"}}/>
+        
+    </div>
+);
 
+};
+  
 export default Login;
