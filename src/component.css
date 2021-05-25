@@ -25,6 +25,7 @@
     background-color: #50C1E9;
 }
 
+
 .setTag{
     position: absolute;
     width: 240px;
@@ -325,4 +326,53 @@
     width: 300px;
     height: 1000px;
     background-color:#50C1E9;
+}
+.textboxes{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    font-size: 20px;
+}
+.textcover{
+    position: absolute;
+    border-color:#50C1E9;
+    border-width:2px;
+    width: 300px;
+    height: 300px;
+    
+}
+
+.delete2{
+    width: 35px;
+    height: 35px;
+    background-color: #50c0e93e;
+    position: absolute;
+    left: 306px;
+    bottom: -5px;
+    z-index: 2;
+    font-size: 30px;
+    text-align:center;
+    vertical-align:top;
+    text-align: center;
+    color: #50c0e9ad;  
+}
+
+.draggable2{
+    width: 35px;
+    height: 165px;
+    background-color: #50c0e93e;
+    position: absolute;
+    left: 306px;
+    top: 0px;
+    z-index: 2;
+    font-size: 30px;
+    text-align:center;
+    vertical-align:center;
+    text-align: center;
+    color: #50c0e9ad;
+}
+
+.draggable2:hover, .delete2:hover{
+    background-color:#50c0e97d;
+    color: #50c0e9de;
 }

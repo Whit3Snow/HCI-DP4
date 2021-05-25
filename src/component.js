@@ -9,19 +9,15 @@ import axios from 'axios';
 
 window.$ = window.jQuery = jQuery;  
 
-const list_1 = [];
-const list_2 = [];
-const list_3 = [];
-const list_4 = [];
-const list_5 = [];
+
 var count_id1 = 101; // firebase
 var count_id2 = 201; // firebase
-
+var count_id = 10001;
 var isEmpty = 0;
 var x;
 var y;
 var url1;
-var html_2;
+
 
 class Menu extends React.Component{
     render(){
@@ -126,9 +122,46 @@ function Component(){
                 </tr>
             </table>
             <div class = "Paper">
-                <div id = "component1" class = "component1"></div>
-                
-                <table id = "component2" class = "component2"></table>
+                <div id = "component1"></div>
+                <div id = "10001"></div>
+                <div id = "10002"></div>
+                <div id = "10003"></div>
+                <div id = "10004"></div>
+                <div id = "10005"></div>
+                <div id = "10006"></div>
+                <div id = "10007"></div>
+                <div id = "10008"></div>
+                <div id = "10009"></div>
+                <div id = "10010"></div>
+                <div id = "10011"></div>
+                <div id = "10012"></div>
+                <div id = "10013"></div>
+                <div id = "10014"></div>
+                <div id = "10015"></div>
+                <div id = "10016"></div>
+                <div id = "10017"></div>
+                <div id = "10018"></div>
+                <div id = "10019"></div>
+                <div id = "10020"></div>
+                <div id = "10021"></div>
+                <div id = "10022"></div>
+                <div id = "10023"></div>
+                <div id = "10024"></div>
+                <div id = "10025"></div>
+                <div id = "10026"></div>
+                <div id = "10027"></div>
+                <div id = "10028"></div>
+                <div id = "10029"></div>
+                <div id = "10030"></div>
+                <div id = "10031"></div>
+                <div id = "10032"></div>
+                <div id = "10033"></div>
+                <div id = "10034"></div>
+                <div id = "10035"></div>
+                <div id = "10036"></div>
+                <div id = "10037"></div>
+                <div id = "10038"></div>
+                <div id = "10039"></div>
                 <div class = "bone"></div>
             </div>
             
@@ -209,19 +242,23 @@ function icon1(){
 }
 
 
+//---------------------------------------------------icon2----------------------------------------------------------
 
-
+function delete2(obj){
+    //const getid = obj.id;
+    console.log(obj)
+    //ReactDOM.render(<div></div>, document.getElementById(getid-100000));
+}
 function icon2(){
-    const comp = 
-        '<div>'+
-            '<div class = "a1"></div>'+
-            '<textarea id = '+count_id1+'></textarea>'+
-        '</div>';
-
-    
-
-    const newcomp = <div dangerouslySetInnerHTML={ {__html: comp+html_2} }></div>
-    ReactDOM.render(newcomp, document.getElementById('component1'));
+    const comp = (    
+        <div class = "textcover">
+            <div class = "draggable2" id = {count_id2} >D R A G</div>
+            <div class = "delete2" id = {count_id+100000} onClick = {()=>delete2(this)}>X</div>
+            <textarea class = "textboxes"></textarea>
+        </div>
+    );
+    count_id2++;
+    ReactDOM.render(comp, document.getElementById(count_id++));
 }
 
 function delete1(){
@@ -347,3 +384,115 @@ document.addEventListener('mousedown', function(event) {
 });
 
 export default Component;
+
+
+//---------------------------------------------------------------icon2------------------------------------------------------------------------
+
+document.addEventListener('mousedown', function(event) {
+
+  let dragElem = event.target.closest('.draggable2');
+
+  if (!dragElem) return;
+
+  const getid = dragElem.id;
+
+  let dragElement = jQuery("#" + getid).parents("div")[0]
+
+  event.preventDefault();
+
+  dragElement.ondragstart = function() {
+      return false;
+  };
+
+  let coords, shiftX, shiftY;
+
+  startDrag(dragElement, event.clientX, event.clientY);
+
+  function onMouseUp(event) {
+    finishDrag();
+  };
+
+  function onMouseMove(event) {
+    moveAt(event.clientX, event.clientY);
+  }
+
+  function startDrag(element, clientX, clientY) {
+    
+    if(isDragging) {
+      return;
+    }
+    
+    isDragging = true;
+
+    document.addEventListener('mousemove', onMouseMove);
+    element.addEventListener('mouseup', onMouseUp);
+
+    shiftX = clientX - element.getBoundingClientRect().left;
+    shiftY = clientY - element.getBoundingClientRect().top;
+
+
+    element.style.position = 'fixed';
+
+    moveAt(clientX, clientY);
+  };
+
+  function finishDrag() {
+    if(!isDragging) {
+      return;
+    }
+
+    isDragging = false;
+
+    dragElement.style.top = parseInt(dragElement.style.top) + window.pageYOffset + 'px';
+    dragElement.style.position = 'absolute';
+    
+    x = dragElement.style.left;
+    y = dragElement.style.top;
+
+    console.log(getid, x, y);
+
+    document.removeEventListener('mousemove', onMouseMove);
+    dragElement.removeEventListener('mouseup', onMouseUp);
+  }
+
+  function moveAt(clientX, clientY) {
+      
+    let newX = clientX - shiftX;
+    let newY = clientY - shiftY;
+
+    let newBottom = newY + dragElement.offsetHeight;
+
+    if (newBottom > document.documentElement.clientHeight) {
+
+      let docBottom = document.documentElement.getBoundingClientRect().bottom;
+
+
+      let scrollY = Math.min(docBottom - newBottom, 10);
+
+      if (scrollY < 0) scrollY = 0;
+
+      window.scrollBy(0, scrollY);
+
+      newY = Math.min(newY, document.documentElement.clientHeight - dragElement.offsetHeight);
+    }
+
+    if (newY < 0) {
+
+      let scrollY = Math.min(-newY, 10);
+      if (scrollY < 0) scrollY = 0;
+
+      window.scrollBy(0, -scrollY);
+
+    }
+
+    if (newX < 0) newX = 0;
+    if (newX > document.documentElement.clientWidth - dragElement.offsetWidth) {
+      newX = document.documentElement.clientWidth - dragElement.offsetWidth;
+    }
+
+    dragElement.style.left = newX + 'px';
+    dragElement.style.top = newY + 'px';
+    
+  }
+
+});
