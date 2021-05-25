@@ -1,6 +1,8 @@
 import React, {Component}from 'react';
 import '../style/menu.css';
 import {Link} from 'react-router-dom';
+import menu_img from '../menu.png';
+import x_img from '../letter-x.png';
 
 //링크 대충 시켜놨는데 저 밑에 줄없애주면 좋을 것 같다...
 
@@ -42,9 +44,9 @@ class Menubar extends React.Component{
         const uid=0;//uid받아와야 해서 그냥 이렇게 둠
         return(
             <div>
-                <div id= "fake_bar" onClick={()=>menuon()}></div>
+                <div id= "fake_bar" onClick={()=>menuon()}><img src={menu_img} style={{position:"fixed", top:"49%",height:"40px"}}/></div>
                 <div id = "bar">
-                    <div id="menubar">Menu<span onClick={()=>menuout()} style={{position:'absolute', right:"20px"}}>X</span></div>
+                    <div id="menubar">Menu<img src = {x_img} onClick={()=>menuout()} style={{position:'absolute', right:"20px", top:"20px", height:"20px"}}/></div>
                     
                     <div className="list_m">MAIN
                         <div className="drop_down">

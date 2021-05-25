@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../style/main.css';
 import imgTree from '../tree.png';
 import imgTest from '../badminton_1.jpg';
@@ -6,15 +6,22 @@ import imgTitle from '../title.png';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import Menubar from './menu';
-//import {db, firebaseApp, firebase} from '../firebase';
+import {db, firebaseApp, firebase} from '../firebase';
+import tree1 from '../group_tree1.png';
+import tree2 from '../group_tree2.png';
+import tree3 from '../group_tree3.png';
+import tree4 from '../group_tree4.png';
+import tree5 from '../group_tree5.png';
+import tree6 from '../group_tree6.png';
 
+var M_MAX=500000;
 
 //수정사항: diary firebase 연동에 좋게 바꿈 / 나무 이미지는 연동 시켜두고 group의 choosetree 함수 쓰면 됨(mine=false로 해서 후광효과 없애고)
 //달력 위치 사아알짝 수정, 달력 내부 5월만 바꿈, 함수 추가
 //여기 바꾸니 이름이 같아서인지 저짝도 오류,,, (그냥 원상복구 시켜놓자)
 //예제로 사용할 것
 //노가다로 저 tagfunc다 넣어주면 됨
-var diary = [
+/*var diary = [
     {
         date:{year:2021, month: 4, day: 30},
         title:"D",
@@ -36,18 +43,18 @@ var diary = [
         tag:["Hate","firebase"]
     }
 ]
-
+*/
+var diary=[];
 //가장 최근 3가지 가져오는 함수 (젤 나중에 저장한게 뒤에 와서 그냥 이렇게 함)
-var recent_diary = diary.slice(-3); //firebase 연동해도 이렇게 자르기
-console.log(recent_diary);
+var recent_diary =[]; //firebase 연동해도 이렇게 자르기
+//console.log(recent_diary);
 
 function filter(fi){
     window.location.href = '/Diary/'+fi;
 };
 
-function tagfunc (month,day){
+function tagfunc (month,day){   
     var content = diary.find(e=>e.date.month==month&&e.date.day==day);
-    console.log(content);
     if(content==undefined) return;
     return(
         content.tag.map(e=>{
@@ -61,15 +68,69 @@ function tagfunc (month,day){
 }
 
 
+
+//유저 트리 넣을 때 쓸 함수
+function choosetree (mileage){
+    var section = Math.ceil(mileage*6/M_MAX);
+    console.log(mileage);
+    if (section==1) return tree1;
+    else if (section==2) return tree2;
+    else if (section==3) return tree3;
+    else if (section==4) return tree4;
+    else if (section==5) return tree5;
+    else return tree6;
+  }
+  var mileage;
+
 function Main(props){
+    const name = "BADMINTON LOVERS";
+    const ref1 = db.collection("Groups").doc(name);
+    const ref = db.collection("Groups").doc(name).collection("Diary");
     var size = 2000;
     var zoom = window.innerWidth / size 
-    document.body.style.zoom = zoom;
-        return(
+    document.body.style.zoom = zoom;  
+    const [load, setLoad] = useState(false);
+    //망할 파이어베이스 때문에 잠깐 먹통이 된 녀석 아래 없애고 하면 될꺼임
+
+    useEffect(()=>{
+         function getting_m(){
+            ref1.get().then((doc)=>{
+                mileage = doc.data()["mileage"];
+                console.log(mileage);
+            })
+        }
+        function loading (){
+            ref.get().then((querySnapshot)=>{
+                //console.log(diary);
+                if(diary.length==0){   
+                    querySnapshot.forEach((doc,i) => {
+                        var data = doc.data();
+                        diary.push({date:data["Date"], title:data["Title"], tag:data["Tag"], img:imgTest}); //여긴 테스트용 사진 넣어둠
+                        //date바꾸는 법만 알면 끝
+                    })
+                }
+                console.log(diary); 
+                recent_diary=diary.slice(-3);
+                recent_diary.reverse();
+                console.log(recent_diary);
+                setLoad(true);
+            })
+        }
+        getting_m();
+        loading();
+        
+    },[])
+
+    //if(!load)return(<div>loading</div>)
+    console.log(diary);
+    if(!load) return(<div>loading</div>);
+    else{
+    console.log(load);
+    return(
             <div>
             <body class = "all">
                 <img src={ imgTitle} />
-                <h1 class = "title_1">Welcome to</h1><h1 class = "title_2">Hello Badminton!</h1>
+                <h1 class = "title_1">Welcome to</h1><h1 class = "title_2">{name}</h1>
                 <div class = "logout">logout</div>
                 <div class = "group">group</div>
 
@@ -84,10 +145,10 @@ function Main(props){
                     </thead>
                     <tbody>
                     <tr><td class = "mileage_jun">
-                        16200
+                        {mileage}
                     </td></tr>
                     <tr><td class = "tree">
-                        <img src={ imgTree} class = "tree_img"/>
+                        <img src={choosetree(mileage)} class = "tree_img"/>
                     </td></tr>
                     </tbody>
                 </table>
@@ -116,10 +177,10 @@ function Main(props){
                 </table>
 
 
-                 
                 <div class = "diary">
                 {
                     recent_diary.map((d)=>{
+                        console.log(d);
                         return(
                             <Link to="./diary" class = "hover"> 
                             <table class = "diary_1">
@@ -138,7 +199,7 @@ function Main(props){
                                 </tr>
                                 <tr>
                                 <td class = "diary_date">
-                                    {d.date.year}.{d.date.month},{d.date.day}
+                                    {d.date.year}.{d.date.month}.{d.date.day}
                                 </td>
                                 </tr>
                                 </tbody>
@@ -1363,5 +1424,5 @@ function Dec(){
     ReactDOM.render(element, document.getElementById('tables'));
     ReactDOM.render(month, document.getElementById('changeMonth')); 
 }
-
+}
 export default Main;
