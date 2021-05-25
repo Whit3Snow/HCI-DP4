@@ -1,3 +1,3 @@
 # 바뀐거
 메뉴바에 아이콘들 추가함. 메인화면이랑 다이어리 파이어베이스 연동함 
-menu.js, main.js, diary.j, 이미지들 여러개 추가됨
+menu.js, main.js, diary.js,group.js, 이미지들 여러개 추가됨 (딜레이 걸었음)
