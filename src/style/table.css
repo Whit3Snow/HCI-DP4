@@ -100,16 +100,45 @@
   border: 0px;
   color: white;
 }
+.table_state{
+  text-align: center;
+}
 .wait{
   border: 2px solid gray;
   border-radius: 40px / 40px;
   width: 180px;
   height: 30px;
+  margin:auto;
   background-color: white;
   font-size: 17px;
   color:black;  
   letter-spacing: 1px;
   text-align: center;
+}
+.table_group{
+  margin:auto;
+  text-align:center;
+}
+.real_win{
+  font-size:17px;
+  color:#50C1E9;
+  text-align:center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.real_lose{
+  font-size:17px;
+  color:#FF9292;
+  text-align:center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.real_tie{
+  font-size:17px;
+  color:gray;
+  text-align:center;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 .win{
   border: 2px solid #50C1E9;
