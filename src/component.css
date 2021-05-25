@@ -1,0 +1,262 @@
+.bar{
+    position: absolute;
+    width: 75px;
+    height: 1080px;
+    left: 0px;
+    top: 0px;
+
+    background: #5BE7C4;
+}
+.setTitle{
+    position: absolute;
+    width: 715px;
+    height: 100px;
+    left: 160px;
+    top: 45px;
+
+    background: #FFFFFF;
+    border: 4px solid #5BE7C4;
+    box-sizing: border-box;
+    border-radius: 30px;
+    font-size: 60px;
+}
+
+.icon:hover{
+    background-color: #50C1E9;
+}
+
+.setTag{
+    position: absolute;
+    width: 240px;
+    height: 61px;
+    left: 1491.8px;
+    top: 46.68px;
+
+    background: #FFFFFF;
+    border: 4px solid #5BE7C4;
+    box-sizing: border-box;
+    border-radius: 20px;
+    font-size: 40px;
+    
+}
+.Tag:hover{
+    background: #ffffff;
+    color: #5BE7C4;
+}
+
+.Tag{
+    position: absolute;
+    width: 144px;
+    height: 58px;
+    left: 1754px;
+    top: 46px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+    
+    color: #F5F7FA;
+
+    background: #5BE7C4;
+    border: none;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+.confirm:hover{
+    background: #ffffff;
+    color: #5BE7C4;
+}
+.confirm{
+    position: absolute;
+    width: 104px;
+    height: 61px;
+    left: 1785px;
+    top: 960px;
+    
+    background: #5BE7C4;
+    border: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.components{
+    position: absolute;
+    width: 110px;
+    height: 780px;
+    left: 1780px;
+    top: 150px;
+
+    background: #FFFFFF;
+    mix-blend-mode: normal;
+    border: 5px solid #50C1E9;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.bone{
+    z-index:-1;
+    position: absolute;
+    width: 1550px;
+    height: 2000px;
+    left: 160px;
+    top: 200px;
+    scroll-behavior: auto;
+    background: #FFFFFF;
+    border: 4px solid #5BE7C4;
+    box-sizing: border-box;
+    border-radius: 30px;
+    font-size: 60px;
+}
+
+
+.scoresheet{
+    position : relative;
+    width: 600px;
+    height: 600px;
+
+    background: #ffffff;
+    border: 4px solid #50C1E9;
+    border-radius : 30px;
+}
+
+.score{
+    position: relative;
+    width: 400px;
+    height: 400px;
+
+    background: #ffffff;
+    border: 4px solid #50C1E9;
+    border-radius: 30px;
+}
+.putimg{
+    position: relative;
+    width: 555px;
+    height: 285px;
+    top: 20px;
+    left: 20px;
+    border: 2px solid #50C1E9;
+    border-radius: 30px;
+}
+
+.set{
+    position: relative;
+    width: 210px;
+    height: 250px;
+    top: 40px;
+    left: 20px;
+    border: 2px solid #50C1E9;
+    border-radius: 30px;
+}
+
+.num{
+    width: 50px;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.setnum{
+    width: 50px;
+    text-align: center;
+    
+}
+
+.analysis{
+    position: relative;
+    width: 320px;
+    height: 245px;
+    bottom: 210px;
+    left: 250px;
+    border-radius: 30px;
+    border: 2px solid #50C1E9;
+    
+    text-align:left;
+    vertical-align: top;
+}
+
+.analysis_text{
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    width: 300px;
+    height: 225px;
+    border: none;
+    font-size: 20px;
+}
+
+
+.draggable{
+    width: 150px;
+    height: 47px;
+    background-color: #50c0e939;
+    position: absolute;
+    left: 608px;
+    top: 50px;
+    z-index: 2;
+    font-size: 30px;
+    text-align:center;
+    vertical-align:center;
+}
+.draggable:hover{
+    background-color:#50c0e9ba;
+}
+
+.delete1{
+    width: 150px;
+    height: 47px;
+    background-color: #50c0e939;
+    position: absolute;
+    left: 608px;
+    top: 100px;
+    z-index: 2;
+    font-size: 30px;
+    text-align:center;
+    vertical-align:center;
+}
+.delete1:hover{
+    background-color:#50c0e9ba;
+}
+
+
+
+.component1{
+    position: absolute;
+}
+
+.but{
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    z-index: 5;
+}
+
+.upload{
+    position: absolute;
+    top: -260px;
+    left: 250px;
+}
+
+.file{
+    position: absolute;
+    width: 300px;
+    height: 40px;
+    left: 1000px;
+    top: 300px;
+
+}
+
+.upbutton{
+    position: absolute;
+    width: 200px;
+    height: 60px;
+    left: 1000px;
+    top: 370px;
+}
