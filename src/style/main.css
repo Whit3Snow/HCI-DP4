@@ -1,5 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
+.message_text{
+    font-size: 23px;
+    font-weight: bolder;
+    max-height : 25px;
+}
+.empty{
+    font-size : 20px;
+    color : gray;
+    text-align: center;
+    font-weight: normal;
+}
+.contents {
+    position: absolute;
+    width : 670px;
+    height : 200px;
+    background-color: #F5F3F3;
+    left : 650px;
+    top : 487px;
+    border-radius: 5px;
+    font-size : 25px;
+}
 .all{
     position: absolute;
     left: 60px;
@@ -32,7 +53,7 @@
     position: absolute;
     width: 150px;
     height: 50px;
-    left: 1265px;
+    left: 1215px;
     top: 225px;
     background: #ffffff;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
@@ -41,17 +62,21 @@
     font-size: 32px;
     font-weight:900;
     color:#5BE7C4;
+    border:0px;
 }
-.logout:hover{
+.logout:hover,active, hover{
     background: #5BE7C4;
     color: #ffffff;
+    border: none;
+    outline:none;
 }
 
 .group{
+    border:0px;
     position: absolute;
     width: 150px;
     height: 50px;
-    left: 1090px;
+    left: 1040px;
     top: 225px;
     background: #ffffff;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
@@ -62,9 +87,11 @@
     color:#5BE7C4;
 }
 
-.group:hover{
+.group:hover,active, hover{
     background: #5BE7C4;
     color: #ffffff;
+    border: none;
+    outline:none;
 }
 
 .tree_img{
@@ -88,7 +115,7 @@
 .content_title{
     text-align: left;
     font-size: 40px;
-    font-weight: 900;
+    font-weight: 800;
     color:#5BE7C4;
     border-bottom: 2px solid #dfdfdf;
     height: 60px;
@@ -147,7 +174,7 @@
     position:absolute;
     top:0px;
     width: 125px;
-    height: 1000px;
+    height: 1100px;
     background-color: #5BE7C4;
 }
 
@@ -185,7 +212,7 @@
 
 .title_1{
     position: absolute;
-    left: 400px;
+    left: 345px;
     top: 80px;
     font-size: 60px;
     font-family: sans-serif;
@@ -193,9 +220,10 @@
 
 .title_2{
     position: absolute;
-    left: 780px;
-    top: 55px;
-    font-size: 90px;
+    left: 720px;
+    top: 70px;
+    font-size: 70px;
+    font-weight: bolder;
     font-family: sans-serif;
 }
 
@@ -252,7 +280,6 @@
     border-radius: 30px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
-
 .diary_3{
     position: absolute;
     width: 328px;
@@ -344,8 +371,8 @@
     border-color: #E8E8E8;
     position: relative;
     top: 70px;
-    width: 680px;
-    left: 235px;
+    width: 700px;
+    left: 100px;
 }
 
 .calendar-left {

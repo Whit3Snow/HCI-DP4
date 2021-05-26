@@ -117,3 +117,16 @@ ul.mylist li {
     text-align: center;
     line-height: 800px;
 }
+#new_post{
+    position:absolute;
+    width: 200px;
+    height: 75px;
+    left: 1150px;
+    top:55px;
+    background-color: #5BE7C4;
+    border-radius: 10px;
+    color: #ffffff;
+    border:none;
+    font-size: 24px;
+
+}

@@ -4,6 +4,35 @@
   font-weight: 200;
 }
 
+.avail_num{
+  border-radius: 7px;
+  background-color: white;
+  color: #50C1E9;
+  font-weight: bolder;
+  font-size: 34px;
+  position: absolute;
+  width:615px;
+  line-height: 80px;
+  height:70px;
+  top:415px;
+  left:125px;
+  font-family: "Roboto";
+  text-align: right;
+}
+
+.avail_line{
+  border-radius: 7px;
+  background-color: #50C1E9;
+  position: absolute;
+  width:597px;
+  line-height: 80px;
+  height:1px;
+  top:485px;
+  left:150px;
+  font-family: "Roboto";
+  text-align: right;
+}
+
 .M1:hover {
   background-color: #5BE7C4;
   border: 0px;
@@ -188,7 +217,7 @@
   box-shadow: 0.5px 0.5px 2px #BCBEC0;
   border-radius: 3px;
 }
-.contents{
+.contents_challenge{
   position: absolute;
   color: black;
   font-family: "Roboto";
@@ -296,16 +325,6 @@
 }
 
 
-.menu-bar{
-  background-color: #5BE7C4;
-  width:80px;
-  height:760px;
-  position:absolute;
-  top:0px;
-  display: flex;
-  margin:0px;
-  left:0px;
-}
 .App-header {
   background-color: #F5F7FA;
   min-height: 100vh;
@@ -315,5 +334,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  
+  height:760px;
 }
 

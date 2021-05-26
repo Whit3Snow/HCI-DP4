@@ -6,6 +6,7 @@
 
 .App {
   text-align: center;
+  
 }
 .Circle{
   border-radius: 50%;
@@ -122,16 +123,7 @@
 }
 
 
-.menu-bar{
-  background-color: #5BE7C4;
-  width:80px;
-  height:760px;
-  position:absolute;
-  top:0px;
-  display: flex;
-  margin:0px;
-  left:0px;
-}
+
 .App-header {
   background-color: #F5F7FA;
   min-height: 100vh;
@@ -141,4 +133,5 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  height:100%;
 }
