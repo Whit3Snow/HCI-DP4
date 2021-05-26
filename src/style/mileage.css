@@ -3,6 +3,12 @@
   src: url("../font/Roboto-Regular.ttf") format("truetype");
   font-weight: 200;
 }
+
+.dialogs {
+  width : 100px;
+  height : 10px;
+  background-color: blueviolet;
+}
 .inputgoal{
   font-size: 17px;
     width: 558px;

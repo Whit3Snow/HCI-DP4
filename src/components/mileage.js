@@ -1,11 +1,11 @@
 import React,{useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import '../style/mileage.css';
-import imgfile from '../ranking.PNG';
+import imgfile from '../ranking.png';
 import imgfile2 from '../goal.png';
-import imgfile3 from '../1st.PNG';
-import imgfile4 from '../2nd.PNG';
-import imgfile5 from '../3rd.PNG';
+import imgfile3 from '../1st.png';
+import imgfile4 from '../2nd.png';
+import imgfile5 from '../3rd.png';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -137,7 +137,7 @@ function Mileage(props){
         // //console.log(mileage1)
         // setRanks(mileage1[0])
         // //console.log(ranks)
-    })
+    },[])
     //console.log(ranks)
     //console.log(mileages)
     //console.log(mymileages)
@@ -245,6 +245,7 @@ function Mileage(props){
         }
         gg.push(ele);
     }
+    
     ////console.log(gg);
     for (var l=0;l<goals.length;l++){
         if (goals[l].state=="success") gg[l].state=<div className="success">Success!</div>
@@ -257,6 +258,8 @@ function Mileage(props){
                 </div>
         }
     }
+    gg.reverse();
+    //console.log(gg);
 
     
 
@@ -342,6 +345,7 @@ function Mileage(props){
             <DialogTitle id="alert-dialog-title" >+5,000M</DialogTitle>
             <DialogContent>
             <DialogContentText id="alert-dialog-description">
+
                 Congratulations on reaching your goal!
             </DialogContentText>
             </DialogContent>
@@ -349,6 +353,7 @@ function Mileage(props){
             <Button onClick={handleClose} color="primary" autoFocus>
                 Get Mileage!
             </Button>
+            
             </DialogActions>
             </Dialog>     
     </div>

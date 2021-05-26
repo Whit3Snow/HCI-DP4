@@ -1,10 +1,19 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import '../style/main.css';
 import imgTree from '../tree.png';
 import imgTest from '../badminton_1.jpg';
 import imgTitle from '../title.png';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
+import {db,firebaseApp, firebase} from "../firebase.js"
+import Modal from './Modal';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { set } from 'lodash';
 
 
 
@@ -17,7 +26,258 @@ function off(){
 }
 
 
+
 function Main(props){
+
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const [ modal_if, setModalif] = useState({withgroup: "", bet:"", contents: ""});
+    const [ index, setIndex ] = useState(0);
+    const [mychallenges,setChallenge]=useState([]);
+    const [ datas , setDatas] = useState([]);
+    const [ oppdata, setOppdata] = useState([]);
+    const [ phone, setPhone] = useState("");
+    const [ opgroup, setOpgroup] = useState("");
+    const [ opindex, setOpindex ] = useState(0);
+
+    var mygroup=props.location.state.group;
+    var user=props.location.state.user;
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+
+        //console.log("dkdkdkdkdk");
+        setOpen(false);
+
+    };
+
+    const openModal = () => {
+        setModalOpen(true);
+    }
+    const closeModal = () => {
+        var docRef = db.collection("Groups").doc(mygroup);
+        datas[index].send = 3;
+        const r_pack = datas;
+        var opdocRef = db.collection("Groups").doc(opgroup);
+        
+        docRef.update({
+            challenge: firebase.firestore.FieldValue.delete()
+        }); 
+
+        for (var i=0;i<r_pack.length;i++){
+            var r_change = {
+                accept : r_pack[i].accept,
+                bet : r_pack[i].bet,
+                contents : r_pack[i].contents,
+                date : r_pack[i].date,
+                send : r_pack[i].send,
+                withgroup : r_pack[i].withgroup
+            }
+            docRef.update({
+                challenge: firebase.firestore.FieldValue.arrayUnion(r_change)
+            });
+        }
+        oppdata[opindex].send = 3;
+        const r_oppack = oppdata;
+
+        opdocRef.update({
+            challenge: firebase.firestore.FieldValue.delete()
+        });        
+
+        for (var i=0;i<r_oppack.length;i++){
+            var r_opchange = {
+                accept : r_oppack[i].accept,
+                bet : r_oppack[i].bet,
+                contents : r_oppack[i].contents,
+                date : r_oppack[i].date,
+                send : r_oppack[i].send,
+                withgroup : r_oppack[i].withgroup
+            }
+            opdocRef.update({
+                challenge: firebase.firestore.FieldValue.arrayUnion(r_opchange)
+            });
+        }
+
+        setModalOpen(false);
+    }
+
+    const acceptModal = () => {
+        console.log(modal_if)
+        var docRef = db.collection("Groups").doc(mygroup);
+        var opdocRef = db.collection("Groups").doc(opgroup);
+        console.log(datas);
+        
+        datas[index].accept = 1;
+        const pack = datas;
+        console.log(pack)
+
+        docRef.update({
+            challenge: firebase.firestore.FieldValue.delete()
+        });        
+
+        for (var i=0;i<pack.length;i++){
+            var change = {
+                accept : pack[i].accept,
+                bet : pack[i].bet,
+                contents : pack[i].contents,
+                date : pack[i].date,
+                send : pack[i].send,
+                withgroup : pack[i].withgroup
+            }
+            docRef.update({
+                challenge: firebase.firestore.FieldValue.arrayUnion(change)
+            });
+        }
+
+        oppdata[opindex].accept = 1;
+        const oppack = oppdata;
+        console.log(oppack)
+
+        opdocRef.update({
+            challenge: firebase.firestore.FieldValue.delete()
+        });        
+
+        for (var i=0;i<oppack.length;i++){
+            var opchange = {
+                accept : oppack[i].accept,
+                bet : oppack[i].bet,
+                contents : oppack[i].contents,
+                date : oppack[i].date,
+                send : oppack[i].send,
+                withgroup : oppack[i].withgroup
+            }
+            opdocRef.update({
+                challenge: firebase.firestore.FieldValue.arrayUnion(opchange)
+            });
+        }
+        
+
+        
+        setModalOpen(false);
+        handleClickOpen();
+    }
+
+    
+    var size = 1900;
+    var zoom = window.innerWidth / size 
+
+    document.body.style.zoom = zoom;
+
+
+    async function getch(group){
+        var groups=[];
+        var challenges=[];
+        var phones=[];
+        await db.collection("Groups").get().then((querySnapshot)=>{
+            querySnapshot.forEach((doc)=>{
+                groups.push(doc.id);
+                challenges.push([doc.data().challenge]);
+                phones.push([doc.data().phonenumber]);
+            });
+        });
+        var mychallenge=[];
+        for (var i=0;i<groups.length;i++){
+            if(groups[i]==group) {
+                mychallenge=challenges[i];
+                if(group != mygroup){
+                    console.log(phones[i][0])
+                    setPhone(phones[i][0])
+                }
+            }
+        }
+        //console.log(mychallenge)
+        return mychallenge;
+    }
+
+    
+
+    useEffect( async()=>{
+        //var recieve = []
+        async function fetchAndSetUser(){
+            const data=await getch(mygroup);
+            console.log(data)
+            console.log(data[0])
+            
+            var recieve = []
+            for(var i = 0; i < data[0].length; i++){
+                if(data[0][i].send == 1){
+                    console.log("send it")
+                    continue;
+                }
+                if(data[0][i].accept == 1){
+                    console.log("already accept")
+                    continue;
+                }
+
+                if(data[0][i].send == 3){
+                    console.log("already rejected")
+                    continue;
+                }
+                console.log(i);
+                const index = i;
+                const withgroup = data[0][i];
+                var mem = {withgroup : <div>&nbsp;&nbsp;From.&nbsp;&nbsp;<br></br>&nbsp;&nbsp;<button className="SButton" onClick={(e)=>open_button(index,withgroup)} variant="outlined" color="primary" >open</button> &nbsp; {data[0][i].withgroup}</div>}
+                //var mem = { bet : data[0][i].bet, withgroup : <div><button className="SButton" onClick={(e)=>open_button(index,withgroup)} variant="outlined" color="primary" >open</button> &nbsp; {data[0][i].withgroup}</div>, contents : data[0][i].contents}
+                recieve.push(mem);
+            }
+            console.log(recieve)
+            if (recieve.length == 0){
+                recieve.push({withgroup : <div className = "empty">Empty...</div>})
+            }
+            setChallenge(recieve.reverse());
+            const dati = data[0];
+            setDatas(dati);
+            //setChallenge(recieve.reverse());
+        } 
+        console.log("sdflksdjflkdjfl")
+        await fetchAndSetUser();
+        console.log(mychallenges);
+        //setChallenge(recieve.reverse());
+        
+    },[])
+    async function open_button(i,withgroup){
+        console.log(i + ", " + withgroup);
+        setModalif(withgroup);
+        setIndex(i);
+        console.log(withgroup.withgroup)
+        const opdata = await getch(withgroup.withgroup)
+        setOpgroup(withgroup.withgroup);
+        for (var i = 0 ; i < opdata[0].length ; i++){
+            if(opdata[0][i].accept == 0){
+                if(opdata[0][i].contents == withgroup.contents){
+                    if(opdata[0][i].date == withgroup.date){
+                        if(opdata[0][i].send == 1){
+                            if(opdata[0][i].withgroup == mygroup){
+                                if(opdata[0][i].bet == withgroup.bet){
+                                    setOpindex(i)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        console.log(opindex);
+        console.log(opdata[0])
+        setOppdata(opdata[0])
+        openModal();
+    }
+
+    const con_message = () => {
+        //alert("gogo")
+    }
+
+    const hstyle = {
+        color : "blueviolet"
+        
+    }
+
+
+    
 
         class Menu extends React.Component{
             render(){
@@ -44,15 +304,52 @@ function Main(props){
                 )
             }
         }
-
-
+      
         return(
-
+            
             <div>
+            <React.Fragment>
+            <button onClick={ openModal }>모달팝업</button>
+            
+            <Modal open={ modalOpen } close={ closeModal } accept = {acceptModal} header="CHALLENGE FOR YOU!">
+                <main>
+                <main> { props.children } </main>
+                Sending Group : {modal_if.withgroup} <br></br>
+                <br></br>
+                Recieving Group : {mygroup} <br></br>
+                <br></br>
+                Betting Mileage : {modal_if.bet}M <br></br>
+                <br></br>
+                Contents : 
+                <div className = "contents">&nbsp;{modal_if.contents}</div>
+                </main>
+            </Modal>
+            </React.Fragment>
 
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title" style={hstyle} >&nbsp;&nbsp;{opgroup}&nbsp;&nbsp;Phone number&nbsp;</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description" color = "black">
+                &nbsp;&nbsp;&nbsp;{phone}
+                
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleClose} color="#6c757d" autoFocus>
+                Ok!
+            </Button>
+            
+            </DialogActions>
+            </Dialog>   
+               
             <body class = "all">
                 <img src={ imgTitle} />
-                <h1 class = "title1">Welcome to</h1><h1 class = "title2">Hello Badminton!</h1>
+                <h1 class = "title_1">Welcome to</h1><h1 class = "title_2">Hello Badminton!</h1>
                 <div class = "logout">logout</div>
                 <div class = "group">group</div>
                 <table class = "toTree">
@@ -64,7 +361,7 @@ function Main(props){
                     </tr>
                     </thead>
                     <tbody>
-                    <tr><td class = "mileage">
+                    <tr><td class = "mileage_jun">
                         16200
                     </td></tr>
                     <tr><td class = "tree">
@@ -72,25 +369,18 @@ function Main(props){
                     </td></tr>
                     </tbody>
                 </table>
-                <table class = "toMessage">
+                <table class = "toMessage" id="example-table-1">
                     <thead>
                     <tr><td class = "content_title">
-                    Message
+                    Message !
                     </td></tr>
                     </thead>
-                    <tbody>
-                    <tr><td class = "message">
-                    Challenge message from...
-                    </td></tr>
-                    <tr><td class = "message">
-                    Challenge message from...
-                    </td></tr>
-                    <tr><td class = "message">
-                    Complete message from...
-                    </td></tr>
-                    <tr><td class = "message">
-                    Challenge message from...
-                    </td></tr>
+                    <tbody className = "message_text">
+                    {mychallenges.reverse().map(movie =>
+                        <tr key={movie.id} onClick = {con_message}>
+                            <td text-align = 'center' >&nbsp;&nbsp;{movie.withgroup}</td>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
                 <div class = "diary">
@@ -184,7 +474,7 @@ function Main(props){
                     </div>
                     <hr class="month-line"/>
                     <div id = "tables">
-                    <table id = "table" class="table">
+                    <table id = "table" class="table_jun">
                         <thead>
                             <tr class = "week" height = "30px" >
                                 <th class = "Day">SUN</th>
@@ -284,7 +574,7 @@ function Main(props){
 
 function Jan(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
             <thead>
                 <tr class = "week" height = "30px" >
                     <th class = "Day">SUN</th>
@@ -376,7 +666,7 @@ function Jan(){
 
 function Feb(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
             <thead>
                 <tr class = "week" height = "30px" >
                     <th class = "Day">SUN</th>
@@ -468,7 +758,7 @@ function Feb(){
 
 function Mar(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
             <thead>
                 <tr class = "week" height = "30px" >
                     <th class = "Day">SUN</th>
@@ -560,7 +850,7 @@ function Mar(){
 
 function Apr(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
             <thead>
                 <tr class = "week" height = "30px" >
                     <th class = "Day">SUN</th>
@@ -652,7 +942,7 @@ function Apr(){
 
 function May(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -744,7 +1034,7 @@ function May(){
 
 function Jun(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -836,7 +1126,7 @@ function Jun(){
 
 function Jul(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -928,7 +1218,7 @@ function Jul(){
 
 function Aug(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -1020,7 +1310,7 @@ function Aug(){
 
 function Sep(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -1112,7 +1402,7 @@ function Sep(){
 
 function Oct(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -1204,7 +1494,7 @@ function Oct(){
 
 function Nov(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>
@@ -1296,7 +1586,7 @@ function Nov(){
 
 function Dec(){
     const element = (
-        <table id = "table" class="table">
+        <table id = "table" class="table_jun">
         <thead>
             <tr class = "week" height = "30px" >
                 <th class = "Day">SUN</th>

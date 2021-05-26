@@ -215,16 +215,7 @@ const MoviesPage = (props) =>{
                             <td width = "230" text-align = 'center'>{movie.date}</td>
                             <td width = "300" text-align = 'center'>{movie.withgroup}</td>
                             <td width = "220" text-align = 'center'>{movie.bet}</td>
-                            <td width = "300" text-align = 'center'> 
-                                {/* <button> win </button> */}
-                                {/* <select name="cars" id="cars">
-                                <option value="win" font-color = 'green'>Win</option>
-                                <option value="Lose">Lose</option>
-                                <option value="Challenge Acceted!">Challenge Acceted!</option>
-                                <option value="Challenge sent!">Challenge sent!</option>
-                                </select> */}
-                                {movie.state}
-                            </td>
+                            <td width = "300" text-align = 'center'> {movie.state}</td>
                         </tr>
                     )}
                 </tbody>

@@ -21,10 +21,7 @@ var x;
 var y;
 var url1;
 var i2 = 701;
-var i3_1 = 801;
-var i3_2 = 10301;
 var i5 = 10501;
-var i4 = 901;
 
 
 
@@ -66,20 +63,6 @@ var icon2_field = [];
 var icon1_input = [];
 var icon1_locate = [];
 var icon1_field = [];
-var icon1_text = "";
-
-var icon3_input = [];
-var icon3_locate = [];
-var icon3_field = [];
-
-var icon4_input = [];
-var icon4_locate = [];
-var icon4_field = [];
-
-var icon5_input = [];
-var icon5_locate = [];
-var icon5_field = [];
-
 
 
 function textareaToVar(){
@@ -89,45 +72,32 @@ function textareaToVar(){
         console.log(valueInVar_2);
         icon2_field.push(valueInVar_2);
     }
-    for(var i = 0; i < icon4_input.length; i++){
-      var valueInVar_4 = document.getElementById(icon4_input[i]).value;
-      console.log(valueInVar_4);
-      icon4_field.push(valueInVar_4);
-  }
-    console.log("dkfjsldkfjlsdfkj")
-    for(var j = 0; j < icon1_input.length; j++){
-      if(j == icon1_input.length - 1){
-        var valueInVar_1_2 = document.getElementById(icon1_input[j]).value;
-        icon1_text = valueInVar_1_2;
-        continue;
-      }
-        
-      var valueInVar_1 = document.getElementById(icon1_input[j]).value;
-      console.log(valueInVar_1);
-      icon1_field.push(valueInVar_1);
-        
+   
+    for(var j = 0; j < 11; j++){
+        var valueInVar_1 = document.getElementById(icon1_input[j]).value;
+        console.log(valueInVar_1);
+        icon1_field.push(valueInVar_1);
 
     }
-    console.log("dkfjsldfkjlsdkfjl")
-    for(var k = 0; k < icon3_input.length; k++){
-      console.log(icon3_input)
-      var valueInVar_3_1 = document.getElementById(icon3_input[k].first).value;
-      console.log(valueInVar_3_1);
-      var valueInVar_3_2 = document.getElementById(icon3_input[k].second).value;
-      console.log(valueInVar_3_2);
-      icon3_field.push({first : valueInVar_3_1, second : valueInVar_3_2})
-    }
+    
     
     
 }
 
 const tags = [];
 
-function Component(){
+function Component(props){
 
   db.collection("Groups")
 
   const name = "HELLO BADMINTON";
+
+  const doc_id = props.location.state.doc_id;
+  const mygroup = props.location.state.group;
+
+
+
+  var docRef = db.collection("Groups").doc(mygroup).collection("Diary").doc(doc_id);
 
   const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState(""); //ok
@@ -144,46 +114,24 @@ function Component(){
           }
   }
 
-  var icon_loc_2 = [];
-  var icon_loc_3 = [];
-  var icon_loc_4 = [];
-  var icon_loc_5 = [];
+  var icon_loc = [];
   function confirm_func(){
       textareaToVar()
       for(var i=0 ; i < icon2_locate.length ; i++){
           console.log(icon2_locate[i]);
-          icon_loc_2.push({x:icon2_locate[i][1][0] , y:icon2_locate[i][1][1]})
-      }
-      for(var i=0 ; i < icon3_locate.length ; i++){
-        console.log(icon3_locate[i]);
-        icon_loc_3.push({x:icon3_locate[i][1][0] , y:icon3_locate[i][1][1]})
+          icon_loc.push({x:icon2_locate[i][1][0] , y:icon2_locate[i][1][1]})
       }
 
-      for(var i=0 ; i < icon4_locate.length ; i++){
-        console.log(icon4_locate[i]);
-        icon_loc_4.push({x:icon4_locate[i][1][0] , y:icon4_locate[i][1][1]})
-      }
-      console.log(icon_loc_4);
-      console.log(icon4_input.length);
-      console.log(icon4_field);
       const ref = db.collection("Groups").doc(name).collection("Diary");
       ref.add({
               "Date": date,
               "Title":title,
               "Tag":tags,
               "Img": "", //어레이로 할껀데 일단 오류 방지를 위해 "" 해둔거임
-              "icon2_locate" : icon_loc_2,
+              "icon2_locate" : icon_loc,
               "icon2_input" : icon2_field,
               "icon1_locate" : icon1_locate,
-              "icon1_input" : icon1_field,
-              "icon3_locate" : icon_loc_3,
-              "icon3_input" : icon3_field,
-              "icon1_text" : icon1_text,
-              "icon2_length" : icon2_input.length,
-              "icon3_length" : icon3_input.length,
-              "icon4_length" : icon4_input.length,
-              "icon4_locate" : icon_loc_4,
-              "icon4_input" : icon4_field
+              "icon1_input" : icon1_field
 
       }).then(()=>{alert("success!!");})
 
@@ -386,7 +334,6 @@ function delete1(){
 function delete2(thisid){
     console.log(thisid);
     ReactDOM.render(<div></div>, document.getElementById(thisid));
-    
 }
 function icon2(){
     icon2_locate.push([count_id2,[0,0]])
@@ -407,25 +354,17 @@ function icon2(){
 //--------------------------------------------------icon3------------------------------------------------------------//
 function icon3(){
     const thisid = count_id;
-    icon3_locate.push([count_id3,[0,0]])
     const comp = (    
         <div>
             <div class = "draggable3" id = {count_id3} >D R A G</div>
             <div class = "delete3"  onClick = {() => delete2(thisid)}>X</div>
             <div class = "textboxes2">
-                <div>&nbsp;&nbsp;Active skills</div>
-                <textarea class = "textboxes2-1" placeholder = "EX. Return, Drop, Smash ..." id = {i3_1}></textarea>
-                <br></br><br></br><br></br><br></br>
-                <div>&nbsp;&nbsp;Points to supplement</div>
-                <textarea class = "textboxes2-2" placeholder = "EX. Practice using the return technique in the hairpin position" id = {i3_2}></textarea>
+                gogo!
+                <div></div>
             </div>
-          </div>
+            
+        </div>
     );
-    
-    icon3_input.push({first: i3_1, second : i3_2})
-    i3_1++;
-    i3_2++;
-    
     count_id3++;
     ReactDOM.render(comp, document.getElementById(count_id++));
 }
@@ -433,17 +372,14 @@ function icon3(){
 //-------------------------------------------------icon4--------------------------------------------------------//
 
 function icon4(){
-    icon4_locate.push([count_id4,[0,0]])
     const thisid = count_id;
     const comp = (    
         <div>
             <div class = "draggable4" id = {count_id4} >D R A G</div>
-            <div class = "delete4"  onClick = {() => delete2(thisid)} >X</div>
-            <textarea class = "textboxes3" onfocusout="textareaToVar()"  id = {i4}></textarea>
+            <div class = "delete4"  onClick = {() => delete2(thisid)}>X</div>
+            <textarea class = "textboxes3"></textarea>
         </div>
     );
-    icon4_input.push(i4);
-    i4++;
     count_id4++;
     ReactDOM.render(comp, document.getElementById(count_id++));
 }
@@ -664,7 +600,7 @@ document.addEventListener('mousedown', function(event) {
         if(icon2_locate[i][0] == getid){
             icon2_locate[i][1] = [x,y]
         }
-      }
+    }
   
       document.removeEventListener('mousemove', onMouseMove);
       dragElement.removeEventListener('mouseup', onMouseUp);
@@ -778,12 +714,6 @@ document.addEventListener('mousedown', function(event) {
 
     console.log(getid, x, y);
 
-    for(var i = 0 ; i < icon3_locate.length; i++){
-      if(icon3_locate[i][0] == getid){
-          icon3_locate[i][1] = [x,y]
-      }
-    }
-
     document.removeEventListener('mousemove', onMouseMove);
     dragElement.removeEventListener('mouseup', onMouseUp);
   }
@@ -893,11 +823,7 @@ document.addEventListener('mousedown', function(event) {
       y = dragElement.style.top;
   
       console.log(getid, x, y);
-      for(var i = 0 ; i < icon4_locate.length; i++){
-        if(icon4_locate[i][0] == getid){
-            icon4_locate[i][1] = [x,y]
-        }
-      }
+  
       document.removeEventListener('mousemove', onMouseMove);
       dragElement.removeEventListener('mouseup', onMouseUp);
     }
