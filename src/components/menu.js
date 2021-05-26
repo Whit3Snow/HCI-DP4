@@ -38,8 +38,10 @@ import x_img from '../letter-x.png';
     }
 }*/
 
-class Menubar extends React.Component{
-    render(){
+function Menubar(props){
+        var mygroup=props.group;
+        var user=props.user;
+        console.log([mygroup,user]);
         const uid=0;//uid받아와야 해서 그냥 이렇게 둠
         return(
             <div>
@@ -49,35 +51,33 @@ class Menubar extends React.Component{
                     
                     <div className="list_m">MAIN
                         <div className="drop_down">
-                        <Link to = "/main" ><div className="list_sub">Main</div></Link>
+                        <Link to={{pathname :'/main', state : {group: mygroup, user:user}}}><div className="list_sub">Main</div></Link>
                         </div>
                     </div>
                     <div className="list_m"><div>DIARY</div>
                         <div className="drop_down">
-                            <Link to = "/component" ><div className="list_sub">New Posting</div></Link>
-                            <Link to = "/Dairy/&" ><div className="list_sub">Diary</div></Link>
+                            <Link to={{pathname :'/component', state : {group: mygroup, user:user}}}><div className="list_sub">New Posting</div></Link>
+                            <Link to={{pathname :"/diary/&", state : {group: mygroup, user:user}}}><div className="list_sub">Diary</div></Link>
                         </div>
                     </div>
                     <div className="list_m">MILEAGE
                         <div className="drop_down">
-                        <Link to = "/mileage" ><div className="list_sub">Mileage</div></Link>
-                        <Link to = "/challenge" ><div className="list_sub">Challenge</div></Link>
-                        <Link to = "/managenent" ><div className="list_sub">Management</div></Link>
+                        <Link to={{pathname :'./mileage', state : {group: mygroup, user:user}}}><div className="list_sub">Mileage</div></Link>
+                        <Link to={{pathname :"/challenge", state : {group: mygroup, user:user}}}><div className="list_sub">Challenge</div></Link>
+                        <Link to={{pathname :"/management", state : {group: mygroup, user:user}}}><div className="list_sub">Management</div></Link>
                         </div>
                     </div>
                     <div className="list_m">LOGOUT
                     <div className="drop_down">
-                        <Link to = "/login" ><div className="list_sub">Logout</div></Link>
-                        <Link to = {"/group/"+uid} ><div className="list_sub">Change Group</div></Link>
+                        <Link to={{pathname :"/login", state : {group: mygroup, user:user}}}><div className="list_sub">Logout</div></Link>
+                        <Link to={{pathname :"/group/"+uid, state : {group: mygroup, user:user}}}><div className="list_sub">Change Group</div></Link>
                         </div>
                     </div>
                 </div>
                 
             </div>
         )
-    }
 }
-
 
 function menuon(){
     document.getElementById('bar').style.left='0px';

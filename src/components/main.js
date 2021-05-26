@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../style/main.css';
+
 import imgTree from '../tree.png';
 import imgTest from '../badminton_1.jpg';
 import imgTitle from '../title.png';
@@ -13,6 +14,15 @@ import tree3 from '../group_tree3.png';
 import tree4 from '../group_tree4.png';
 import tree5 from '../group_tree5.png';
 import tree6 from '../group_tree6.png';
+import Modal from './Modal';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { createBrowserHistory } from 'history';
+
 
 var M_MAX=500000;
 
@@ -49,25 +59,12 @@ var diary=[];
 var recent_diary =[]; //firebase 연동해도 이렇게 자르기
 //console.log(recent_diary);
 
-function filter(fi){
-    window.location.href = '/Diary/'+fi;
-};
 
-function tagfunc (month,day){   
-    var content = diary.find(e=>e.date.month==month&&e.date.day==day);
-    if(content==undefined) return;
-    return(
-        content.tag.map(e=>{
-            return(
-                <div onClick ={()=>{filter(e)}}>
-                    #{e}
-                </div>
-            )
-        })
-    )
+
+
+function numberWithCommas(x) {
+    return (x+"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
-
 
 //유저 트리 넣을 때 쓸 함수
 function choosetree (mileage){
@@ -83,7 +80,163 @@ function choosetree (mileage){
   var mileage;
 
 function Main(props){
-    const name = "BADMINTON LOVERS";
+    
+
+    const [ modalOpen, setModalOpen ] = useState(false);
+    const [ modal_if, setModalif] = useState({withgroup: "", bet:"", contents: ""});
+    const [ index, setIndex ] = useState(0);
+    const [mychallenges,setChallenge]=useState([]);
+    const [ datas , setDatas] = useState([]);
+    const [ oppdata, setOppdata] = useState([]);
+    const [ phone, setPhone] = useState("");
+    const [ opgroup, setOpgroup] = useState("");
+    const [ opindex, setOpindex ] = useState(0);
+    const history = createBrowserHistory({
+        forceRefresh: true
+        });
+
+    var mygroup=props.location.state.group;
+    var user=props.location.state.user;
+
+    function filter(fi){
+        history.push({pathname :'/Diary/'+fi, state : {group: name, user:props.location.state.user}})
+    }
+
+    function tagfunc (month,day){   
+        var content = diary.find(e=>e.date.month==month&&e.date.day==day);
+        if(content==undefined) return;
+        return(
+            content.tag.map(e=>{
+                return(
+                    <div onClick ={()=>{filter(e)}}>
+                        #{e}
+                    </div>
+                )
+            })
+        )
+    }
+
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+
+        //console.log("dkdkdkdkdk");
+        setOpen(false);
+
+    };
+
+    const openModal = () => {
+        setModalOpen(true);
+    }
+    const closeModal = () => {
+        var docRef = db.collection("Groups").doc(mygroup);
+        datas[index].send = 3;
+        const r_pack = datas;
+        var opdocRef = db.collection("Groups").doc(opgroup);
+        
+        docRef.update({
+            challenge: firebase.firestore.FieldValue.delete()
+        }); 
+
+        for (var i=0;i<r_pack.length;i++){
+            var r_change = {
+                accept : r_pack[i].accept,
+                bet : r_pack[i].bet,
+                contents : r_pack[i].contents,
+                date : r_pack[i].date,
+                send : r_pack[i].send,
+                withgroup : r_pack[i].withgroup
+            }
+            docRef.update({
+                challenge: firebase.firestore.FieldValue.arrayUnion(r_change)
+            });
+        }
+        oppdata[opindex].send = 3;
+        const r_oppack = oppdata;
+
+        opdocRef.update({
+            challenge: firebase.firestore.FieldValue.delete()
+        });        
+
+        for (var i=0;i<r_oppack.length;i++){
+            var r_opchange = {
+                accept : r_oppack[i].accept,
+                bet : r_oppack[i].bet,
+                contents : r_oppack[i].contents,
+                date : r_oppack[i].date,
+                send : r_oppack[i].send,
+                withgroup : r_oppack[i].withgroup
+            }
+            opdocRef.update({
+                challenge: firebase.firestore.FieldValue.arrayUnion(r_opchange)
+            });
+        }
+
+        setModalOpen(false);
+    }
+
+    const acceptModal = () => {
+        console.log(modal_if)
+        var docRef = db.collection("Groups").doc(mygroup);
+        var opdocRef = db.collection("Groups").doc(opgroup);
+        console.log(datas);
+        
+        datas[index].accept = 1;
+        const pack = datas;
+        console.log(pack)
+
+        docRef.update({
+            challenge: firebase.firestore.FieldValue.delete()
+        });        
+
+        for (var i=0;i<pack.length;i++){
+            var change = {
+                accept : pack[i].accept,
+                bet : pack[i].bet,
+                contents : pack[i].contents,
+                date : pack[i].date,
+                send : pack[i].send,
+                withgroup : pack[i].withgroup
+            }
+            docRef.update({
+                challenge: firebase.firestore.FieldValue.arrayUnion(change)
+            });
+        }
+
+        oppdata[opindex].accept = 1;
+        const oppack = oppdata;
+        console.log(oppack)
+
+        opdocRef.update({
+            challenge: firebase.firestore.FieldValue.delete()
+        });        
+
+        for (var i=0;i<oppack.length;i++){
+            var opchange = {
+                accept : oppack[i].accept,
+                bet : oppack[i].bet,
+                contents : oppack[i].contents,
+                date : oppack[i].date,
+                send : oppack[i].send,
+                withgroup : oppack[i].withgroup
+            }
+            opdocRef.update({
+                challenge: firebase.firestore.FieldValue.arrayUnion(opchange)
+            });
+        }
+        
+
+        
+        setModalOpen(false);
+        handleClickOpen();
+    }
+
+    const name = mygroup;
     const ref1 = db.collection("Groups").doc(name);
     const ref = db.collection("Groups").doc(name).collection("Diary");
     var size = 2000;
@@ -91,6 +244,115 @@ function Main(props){
     document.body.style.zoom = zoom;  
     const [load, setLoad] = useState(false);
     //망할 파이어베이스 때문에 잠깐 먹통이 된 녀석 아래 없애고 하면 될꺼임
+
+    async function getch(group){
+        var groups=[];
+        var challenges=[];
+        var phones=[];
+        await db.collection("Groups").get().then((querySnapshot)=>{
+            querySnapshot.forEach((doc)=>{
+                groups.push(doc.id);
+                challenges.push([doc.data().challenge]);
+                phones.push([doc.data().phonenumber]);
+            });
+        });
+        var mychallenge=[];
+        for (var i=0;i<groups.length;i++){
+            if(groups[i]==group) {
+                mychallenge=challenges[i];
+                if(group != mygroup){
+                    console.log(phones[i][0])
+                    setPhone(phones[i][0])
+                }
+            }
+        }
+        //console.log(mychallenge)
+        return mychallenge;
+    }
+
+    useEffect( async()=>{
+        //var recieve = []
+        async function fetchAndSetUser(){
+            const data=await getch(mygroup);
+            console.log(data)
+            console.log(data[0])
+            
+            var recieve = []
+            for(var i = 0; i < data[0].length; i++){
+                if(data[0][i].send == 1){
+                    console.log("send it")
+                    continue;
+                }
+                if(data[0][i].accept == 1){
+                    console.log("already accept")
+                    continue;
+                }
+
+                if(data[0][i].send == 3){
+                    console.log("already rejected")
+                    continue;
+                }
+                console.log(i);
+                const index = i;
+                const withgroup = data[0][i];
+                var mem = {withgroup : <div>&nbsp;&nbsp;From.&nbsp;&nbsp;<br></br>&nbsp;&nbsp;<button className="SButton" onClick={(e)=>open_button(index,withgroup)} variant="outlined" color="primary" >open</button> &nbsp; {data[0][i].withgroup}</div>}
+                //var mem = { bet : data[0][i].bet, withgroup : <div><button className="SButton" onClick={(e)=>open_button(index,withgroup)} variant="outlined" color="primary" >open</button> &nbsp; {data[0][i].withgroup}</div>, contents : data[0][i].contents}
+                recieve.push(mem);
+            }
+            console.log(recieve)
+            if (recieve.length == 0){
+                recieve.push({withgroup : <div className = "empty">Empty...</div>})
+            }
+            setChallenge(recieve.reverse());
+            const dati = data[0];
+            setDatas(dati);
+            //setChallenge(recieve.reverse());
+        } 
+        console.log("sdflksdjflkdjfl")
+        await fetchAndSetUser();
+        console.log(mychallenges);
+        //setChallenge(recieve.reverse());
+        
+    },[])
+
+    
+
+    async function open_button(i,withgroup){
+        console.log(i + ", " + withgroup);
+        setModalif(withgroup);
+        setIndex(i);
+        console.log(withgroup.withgroup)
+        const opdata = await getch(withgroup.withgroup)
+        setOpgroup(withgroup.withgroup);
+        for (var i = 0 ; i < opdata[0].length ; i++){
+            if(opdata[0][i].accept == 0){
+                if(opdata[0][i].contents == withgroup.contents){
+                    if(opdata[0][i].date == withgroup.date){
+                        if(opdata[0][i].send == 1){
+                            if(opdata[0][i].withgroup == mygroup){
+                                if(opdata[0][i].bet == withgroup.bet){
+                                    setOpindex(i)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        console.log(opindex);
+        console.log(opdata[0])
+        setOppdata(opdata[0])
+        openModal();
+    }
+
+    const con_message = () => {
+        //alert("gogo")
+    }
+
+    const hstyle = {
+        color : "blueviolet"
+        
+    }
 
     useEffect(()=>{
          function getting_m(){
@@ -105,14 +367,12 @@ function Main(props){
                 if(diary.length==0){   
                     querySnapshot.forEach((doc,i) => {
                         var data = doc.data();
-                        diary.push({date:data["Date"], title:data["Title"], tag:data["Tag"], img:imgTest}); //여긴 테스트용 사진 넣어둠
-                        //date바꾸는 법만 알면 끝
+                        diary.push({date:data["Date"], title:data["Title"], tag:data["Tag"], img:imgTest, id:doc.id}); //여긴 테스트용 사진 넣어둠
+                        //date바꾸는 법만 알면 끝0
                     })
                 }
-                console.log(diary); 
                 recent_diary=diary.slice(-3);
                 recent_diary.reverse();
-                console.log(recent_diary);
                 setLoad(true);
             })
         }
@@ -122,17 +382,54 @@ function Main(props){
     },[])
 
     //if(!load)return(<div>loading</div>)
-    console.log(diary);
     if(!load) return(<div>loading</div>);
     else{
-    console.log(load);
     return(
             <div>
+
+<React.Fragment>
+            
+            
+            <Modal open={ modalOpen } close={ closeModal } accept = {acceptModal} header="CHALLENGE FOR YOU!">
+                <main>
+                <main> { props.children } </main>
+                Sending Group : {modal_if.withgroup} <br></br>
+                <br></br>
+                Recieving Group : {mygroup} <br></br>
+                <br></br>
+                Betting Mileage : {modal_if.bet}M <br></br>
+                <br></br>
+                Contents : 
+                <div className = "contents">&nbsp;{modal_if.contents}</div>
+                </main>
+            </Modal>
+            </React.Fragment>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title" style={hstyle} >&nbsp;&nbsp;{opgroup}&nbsp;&nbsp;Phone number&nbsp;</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description" color = "black">
+                &nbsp;&nbsp;&nbsp;{phone}
+                
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleClose} color="#6c757d" autoFocus>
+                Ok!
+            </Button>
+            
+            </DialogActions>
+            </Dialog> 
+
             <body class = "all">
                 <img src={ imgTitle} />
-                <h1 class = "title_1">Welcome to</h1><h1 class = "title_2">{name}</h1>
-                <div class = "logout">logout</div>
-                <div class = "group">group</div>
+                <h1 class = "title_1">Welcome to</h1><h1 class = "title_2">{name}!</h1>
+                <Link to="./login"><button class = "logout">logout</button></Link>
+                <Link to="/group/0"><button class = "group">group</button></Link>
 
 
                 <table class = "toTree">
@@ -145,7 +442,7 @@ function Main(props){
                     </thead>
                     <tbody>
                     <tr><td class = "mileage_jun">
-                        {mileage}
+                        {numberWithCommas(mileage)}
                     </td></tr>
                     <tr><td class = "tree">
                         <img src={choosetree(mileage)} class = "tree_img"/>
@@ -154,25 +451,18 @@ function Main(props){
                 </table>
 
 
-                <table class = "toMessage">
+                <table class = "toMessage" id="example-table-1">
                     <thead>
                     <tr><td class = "content_title">
-                    Message
+                    Message !
                     </td></tr>
                     </thead>
-                    <tbody>
-                    <tr><td class = "message_jun">
-                    Challenge message from...
-                    </td></tr>
-                    <tr><td class = "message_jun">
-                    Challenge message from...
-                    </td></tr>
-                    <tr><td class = "message_jun">
-                    Complete message from...
-                    </td></tr>
-                    <tr><td class = "message_jun">
-                    Challenge message from...
-                    </td></tr>
+                    <tbody className = "message_text">
+                    {mychallenges.reverse().map(movie =>
+                        <tr key={movie.id} onClick = {con_message}>
+                            <td text-align = 'center' >&nbsp;&nbsp;{movie.withgroup}</td>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
 
@@ -182,7 +472,7 @@ function Main(props){
                     recent_diary.map((d)=>{
                         console.log(d);
                         return(
-                            <Link to="./diary" class = "hover"> 
+                            <Link to={{pathname:'/openDiary/'+d.id, state : {group: name, user:props.location.state.user}}} class = "hover"> 
                             <table class = "diary_1">
                                 <thead>
                                 <tr>
@@ -314,7 +604,7 @@ function Main(props){
                     </div>
                 </div>
             </body>
-            <Menubar/>
+            <Menubar group={mygroup} user={user}/>
             </div>
             
         )

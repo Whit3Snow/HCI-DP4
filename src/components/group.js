@@ -7,6 +7,9 @@ import { useEffect, useState } from 'react';
 import tree1  from '../tree1.png'
 import tree2  from '../tree2.png'
 import tree3  from '../tree3.png'
+import tree4  from '../tree4.png'
+import tree5  from '../tree5.png'
+import tree6  from '../tree6.png'
 import loading from '../loading.PNG'
 import _ from 'lodash';
 
@@ -111,13 +114,20 @@ function Group(props){
         );*/
 }
 
+function numberWithCommas(x) {
+    return (x+"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 class Groupcard extends React.Component{
     choosetree = (mileage)=>{
-        var section = Math.ceil(mileage*3/M_MAX);
-        console.log(section);
+        var section = Math.ceil(mileage*6/M_MAX);
         if (section==1) return tree1;
         else if (section==2) return tree2;
-        else return tree3;
+        else if (section==3) return tree3;
+        else if (section==4) return tree4;
+        else if (section==5) return tree5;
+        else return tree6;
+        
       }
     render(){
         var name = group_info[this.props.number].name;
@@ -127,13 +137,14 @@ class Groupcard extends React.Component{
         return(
             <Link to= {{pathname:'/main',state:{group:name, user:uid}}}>
             <div className = "Section">
-                <div className = "group_tree"></div>
+                <div className = "group_tree"><img id="mytreeimage" src= {tree}/></div>
                 <div className = "group_info">
                     <div className = "name_1">{name}</div>
                     <div className = "exercise">Exercise : {exersize}</div>
-                    <div>{mileage}M</div>
+                    <div>{numberWithCommas(mileage)}M</div>
                 </div>
             </div></Link> //이것도 아직 안고쳤어...
+            
         );
     }
 }

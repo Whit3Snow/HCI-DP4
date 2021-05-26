@@ -6,8 +6,10 @@ const Pagination = (props) => {
     const pageCount = Math.ceil(itemsCount / pageSize);
 
     if(pageCount === 1) return null;
-
+    
+    console.log(props);
     const pages = _.range(1,pageCount + 1);
+    console.log(pages);
 
     return(     
         <nav >{/* VSCode 입력: nav>ul.pagination>li.page-item>a.page-link*/}

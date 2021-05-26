@@ -3,17 +3,6 @@ import '../style/component.css';
 import ReactDOM, {render} from 'react-dom';
 import jQuery from "jquery";
 import {storage, db, firebaseApp, firebase} from "../firebase";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import calendar_img from "../calendar.png";
-import Menubar from './menu';
-import { createBrowserHistory } from 'history'; 
-import small_img from '../small.png';
-import big_img from '../big.png';
-import feedback_img from '../feedback.png';
-import battle_img from '../battle.png';
-import img_img from '../img.png';
-
 
 
 
@@ -32,10 +21,40 @@ var x;
 var y;
 var url1;
 var i2 = 701;
-var i3_1 = 801;
-var i3_2 = 10301;
 var i5 = 10501;
-var i4 = 901;
+
+
+
+
+
+class Menu extends React.Component{
+    render(){
+        return(
+            <div class="menu" id="menu">
+                <div class = "menu_icon" onClick={()=>off()}>
+                    <div class="icon"></div>
+                    <div class="icon"></div>
+                    <div class="icon"></div>
+                </div>
+                <div class = "list" >Main</div>
+                <div class = "list">New Posting</div>
+                <div class = "list">Diary</div>
+                <div class = "list">Mileage</div>
+                <div class = "list">Other Groups</div>
+                <div class = "list">Logout</div>
+            </div>
+        )
+    }
+}
+
+function on(){
+    document.getElementById("menu").style.left = "0px";
+}
+
+function off(){
+    document.getElementById("menu").style.left = "-400px";
+}
+
 
 var icon2_input = [];
 var icon2_locate = [];
@@ -44,20 +63,6 @@ var icon2_field = [];
 var icon1_input = [];
 var icon1_locate = [];
 var icon1_field = [];
-var icon1_text = "";
-
-var icon3_input = [];
-var icon3_locate = [];
-var icon3_field = [];
-
-var icon4_input = [];
-var icon4_locate = [];
-var icon4_field = [];
-
-var icon5_input = [];
-var icon5_locate = [];
-var icon5_field = [];
-
 
 
 function textareaToVar(){
@@ -67,34 +72,14 @@ function textareaToVar(){
         console.log(valueInVar_2);
         icon2_field.push(valueInVar_2);
     }
-    for(var i = 0; i < icon4_input.length; i++){
-      var valueInVar_4 = document.getElementById(icon4_input[i]).value;
-      console.log(valueInVar_4);
-      icon4_field.push(valueInVar_4);
-  }
-    console.log("dkfjsldkfjlsdfkj")
-    for(var j = 0; j < icon1_input.length; j++){
-      if(j == icon1_input.length - 1){
-        var valueInVar_1_2 = document.getElementById(icon1_input[j]).value;
-        icon1_text = valueInVar_1_2;
-        continue;
-      }
-        
-      var valueInVar_1 = document.getElementById(icon1_input[j]).value;
-      console.log(valueInVar_1);
-      icon1_field.push(valueInVar_1);
-        
+   
+    for(var j = 0; j < 11; j++){
+        var valueInVar_1 = document.getElementById(icon1_input[j]).value;
+        console.log(valueInVar_1);
+        icon1_field.push(valueInVar_1);
 
     }
-    console.log("dkfjsldfkjlsdkfjl")
-    for(var k = 0; k < icon3_input.length; k++){
-      console.log(icon3_input)
-      var valueInVar_3_1 = document.getElementById(icon3_input[k].first).value;
-      console.log(valueInVar_3_1);
-      var valueInVar_3_2 = document.getElementById(icon3_input[k].second).value;
-      console.log(valueInVar_3_2);
-      icon3_field.push({first : valueInVar_3_1, second : valueInVar_3_2})
-    }
+    
     
     
 }
@@ -102,20 +87,23 @@ function textareaToVar(){
 const tags = [];
 
 function Component(props){
-  const history = createBrowserHistory({forceRefresh: true });;
-  console.log(history);
-  const name= props.location.state.group;
-  var size = 2000;
-  var zoom = window.innerWidth / size 
-  document.body.style.zoom = zoom;
-
 
   db.collection("Groups")
+
+  const name = "HELLO BADMINTON";
+
+  const doc_id = props.location.state.doc_id;
+  const mygroup = props.location.state.group;
+
+
+
+  var docRef = db.collection("Groups").doc(mygroup).collection("Diary").doc(doc_id);
 
   const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState(""); //ok
   const [tag,setTag]=useState(""); //ok
   const [img, setImg] = useState([]); // 여기 통해서 이미지 정보들 넘겨줘요오오
+
   const [image, setImage] = useState(null)
   const [url, setUrl] = useState("");
   
@@ -126,82 +114,32 @@ function Component(props){
           }
   }
 
-  function regtag(){
-    tags.push(tag);
-    setTag("");
-    console.log(tags);
-}
-
-  function changing_date(d){
-    var s_date = d.split(" ");
-    var month;
-    if (s_date[1]=='Jab') month=1;
-    else if(s_date[1]=='Feb') month=2;
-    else if(s_date[1]=='Mar') month=3;
-    else if(s_date[1]=='Apr') month=4;
-    else if(s_date[1]=='May') month=5;
-    else if(s_date[1]=='Jun') month=6;
-    else if(s_date[1]=='Jul') month=7;
-    else if(s_date[1]=='Aug') month=8;
-    else if(s_date[1]=='Sep') month=9;
-    else if(s_date[1]=='Oct') month=10;
-    else if(s_date[1]=='Nov') month=11;
-    else  month=12;
-    var convert_date = {year:Number(s_date[3]), month:month, day:Number(s_date[2])}
-    return convert_date;
-  }
-
-  var icon_loc_2 = [];
-  var icon_loc_3 = [];
-  var icon_loc_4 = [];
-  var icon_loc_5 = [];
+  var icon_loc = [];
   function confirm_func(){
       textareaToVar()
       for(var i=0 ; i < icon2_locate.length ; i++){
           console.log(icon2_locate[i]);
-          icon_loc_2.push({x:icon2_locate[i][1][0] , y:icon2_locate[i][1][1]})
-      }
-      for(var i=0 ; i < icon3_locate.length ; i++){
-        console.log(icon3_locate[i]);
-        icon_loc_3.push({x:icon3_locate[i][1][0] , y:icon3_locate[i][1][1]})
+          icon_loc.push({x:icon2_locate[i][1][0] , y:icon2_locate[i][1][1]})
       }
 
-      for(var i=0 ; i < icon4_locate.length ; i++){
-        console.log(icon4_locate[i]);
-        icon_loc_4.push({x:icon4_locate[i][1][0] , y:icon4_locate[i][1][1]})
-      }
-      console.log(icon_loc_4);
-      console.log(icon4_input.length);
-      console.log(icon4_field);
       const ref = db.collection("Groups").doc(name).collection("Diary");
       ref.add({
-              "Date": changing_date(date.toString()),
+              "Date": date,
               "Title":title,
               "Tag":tags,
               "Img": "", //어레이로 할껀데 일단 오류 방지를 위해 "" 해둔거임
-              "icon2_locate" : icon_loc_2,
+              "icon2_locate" : icon_loc,
               "icon2_input" : icon2_field,
               "icon1_locate" : icon1_locate,
-              "icon1_input" : icon1_field,
-              "icon3_locate" : icon_loc_3,
-              "icon3_input" : icon3_field,
-              "icon1_text" : icon1_text,
-              "icon2_length" : icon2_input.length,
-              "icon3_length" : icon3_input.length,
-              "icon4_length" : icon4_input.length,
-              "icon4_locate" : icon_loc_4,
-              "icon4_input" : icon4_field
+              "icon1_input" : icon1_field
 
-      }).then(()=>{alert("success!!"); history.push({pathname :'/Diary/&', state : {group: name, user:props.location.state.user}});})
+      }).then(()=>{alert("success!!");})
 
+
+      
   }
-
-  function cancel_func(){
-    alert("Modifications are not reflected"); history.push({pathname :'/Diary/&', state : {group: name, user:props.location.state.user}});}
-  
         
         const handleUpload = () => {
-          if (image==null) {alert("no image"); return;} 
             const uploadTask = storage.ref(`images/${image.name}`).put(image);
             uploadTask.on(
               "state_changed",
@@ -233,33 +171,34 @@ function Component(props){
         url1 = url;
         return(
         <body>
-            <input type = "text" class = "setTitle" placeholder = " Title" value={title} onChange={(e)=>{setTitle(e.target.value)}}/>
-            <div id="date_choice"><img src={calendar_img} style={{height:"50px"}}/><DatePicker selected={date} onChange={date => setDate(date)} /></div>
-            
+            <div class = "bar"></div>
+            <input type = "text" class = "setTitle" placeholder = " Title"/>
+            <input type = "text" class = "setTag"/>
             <div class = "upload">
                 <input type="file" class = "file" onChange={handleChange}/>
                 <progress value = {progress} max = "100" class = "progress"/>
                 <button type="button" class = "upbutton" onClick={handleUpload}>Upload</button>
             </div>
-            <input type = "text" class = "setTag" value={tag} onChange={(e)=>{setTag(e.target.value)}}   onKeyPress={e=>{if(e.key=='Enter') regtag()}}/>
-            <button class = "Tag" onClick={regtag}>Tag Register</button>
-            <div id="reged_tag">{tags.map((t)=><span>#{t} </span>)}</div>
+            <button class = "Tag">Tag Register</button>
             <div class = "setCal"></div>
             <table class = "components">
                 <tr>
-                    <td class = "icon" onClick = {() => icon1()}><img src = {battle_img} style={{width:"100px", height:"100px"}}/></td>
+                    <td class = "icon" onClick = {() => icon1()}>1</td>
                 </tr>
                 <tr>
-                    <td class = "icon" onClick = {() => icon2()}><img src = {small_img} style={{width:"100px", height:"100px"}}/></td>
+                    <td class = "icon" onClick = {() => icon2()}>2</td>
                 </tr>
                 <tr>
-                    <td class = "icon" onClick = {() => icon3()}><img src = {feedback_img} style={{width:"100px", height:"100px"}}/></td>
+                    <td class = "icon" onClick = {() => icon3()}>3</td>
                 </tr>
                 <tr>
-                    <td class = "icon" onClick = {() => icon4()}><img src = {big_img} style={{width:"100px", height:"100px"}}/></td>
+                    <td class = "icon" onClick = {() => icon4()}>4</td>
                 </tr>
                 <tr>
-                    <td class = "icon" onClick = {() => icon5()}><img src = {img_img} style={{width:"100px", height:"100px"}}/></td>
+                    <td class = "icon" onClick = {() => icon5()}>5</td>
+                </tr>
+                <tr>
+                    <td class = "icon" onClick = {() => icon1()}>6</td>
                 </tr>
             </table>
             <div class = "Paper">
@@ -308,8 +247,17 @@ function Component(props){
             
             
             <button class = "confirm" onClick = {confirm_func}>Confirm</button>
-            <button class = "cancel" onClick = {cancel_func}>Cancel</button>
-            <Menubar group={props.location.state.group} user={props.location.state.user}/>
+
+            <div>
+                <div class = "menubar">
+                    <div class = "menu_icon" onClick={()=>on()}>
+                        <div class="icon"></div>
+                        <div class="icon"></div>
+                        <div class="icon"></div>
+                    </div>
+                </div>
+                <Menu/>
+            </div>
         </body>
     )
     
@@ -386,7 +334,6 @@ function delete1(){
 function delete2(thisid){
     console.log(thisid);
     ReactDOM.render(<div></div>, document.getElementById(thisid));
-    
 }
 function icon2(){
     icon2_locate.push([count_id2,[0,0]])
@@ -407,25 +354,17 @@ function icon2(){
 //--------------------------------------------------icon3------------------------------------------------------------//
 function icon3(){
     const thisid = count_id;
-    icon3_locate.push([count_id3,[0,0]])
     const comp = (    
         <div>
             <div class = "draggable3" id = {count_id3} >D R A G</div>
             <div class = "delete3"  onClick = {() => delete2(thisid)}>X</div>
             <div class = "textboxes2">
-                <div>&nbsp;&nbsp;Active skills</div>
-                <textarea class = "textboxes2-1" placeholder = "EX. Return, Drop, Smash ..." id = {i3_1}></textarea>
-                <br></br><br></br><br></br><br></br>
-                <div>&nbsp;&nbsp;Points to supplement</div>
-                <textarea class = "textboxes2-2" placeholder = "EX. Practice using the return technique in the hairpin position" id = {i3_2}></textarea>
+                gogo!
+                <div></div>
             </div>
-          </div>
+            
+        </div>
     );
-    
-    icon3_input.push({first: i3_1, second : i3_2})
-    i3_1++;
-    i3_2++;
-    
     count_id3++;
     ReactDOM.render(comp, document.getElementById(count_id++));
 }
@@ -433,17 +372,14 @@ function icon3(){
 //-------------------------------------------------icon4--------------------------------------------------------//
 
 function icon4(){
-    icon4_locate.push([count_id4,[0,0]])
     const thisid = count_id;
     const comp = (    
         <div>
             <div class = "draggable4" id = {count_id4} >D R A G</div>
-            <div class = "delete4"  onClick = {() => delete2(thisid)} >X</div>
-            <textarea class = "textboxes3" onfocusout="textareaToVar()"  id = {i4}></textarea>
+            <div class = "delete4"  onClick = {() => delete2(thisid)}>X</div>
+            <textarea class = "textboxes3"></textarea>
         </div>
     );
-    icon4_input.push(i4);
-    i4++;
     count_id4++;
     ReactDOM.render(comp, document.getElementById(count_id++));
 }
@@ -664,7 +600,7 @@ document.addEventListener('mousedown', function(event) {
         if(icon2_locate[i][0] == getid){
             icon2_locate[i][1] = [x,y]
         }
-      }
+    }
   
       document.removeEventListener('mousemove', onMouseMove);
       dragElement.removeEventListener('mouseup', onMouseUp);
@@ -778,12 +714,6 @@ document.addEventListener('mousedown', function(event) {
 
     console.log(getid, x, y);
 
-    for(var i = 0 ; i < icon3_locate.length; i++){
-      if(icon3_locate[i][0] == getid){
-          icon3_locate[i][1] = [x,y]
-      }
-    }
-
     document.removeEventListener('mousemove', onMouseMove);
     dragElement.removeEventListener('mouseup', onMouseUp);
   }
@@ -893,11 +823,7 @@ document.addEventListener('mousedown', function(event) {
       y = dragElement.style.top;
   
       console.log(getid, x, y);
-      for(var i = 0 ; i < icon4_locate.length; i++){
-        if(icon4_locate[i][0] == getid){
-            icon4_locate[i][1] = [x,y]
-        }
-      }
+  
       document.removeEventListener('mousemove', onMouseMove);
       dragElement.removeEventListener('mouseup', onMouseUp);
     }
