@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/givers.github.io/static/css/main.8dcdc045.chunk.css",
-    "main.js": "/givers.github.io/static/js/main.db27d62b.chunk.js",
-    "main.js.map": "/givers.github.io/static/js/main.db27d62b.chunk.js.map",
-    "runtime-main.js": "/givers.github.io/static/js/runtime-main.456e692e.js",
-    "runtime-main.js.map": "/givers.github.io/static/js/runtime-main.456e692e.js.map",
+    "main.js": "/givers.github.io/static/js/main.5ae081f9.chunk.js",
+    "main.js.map": "/givers.github.io/static/js/main.5ae081f9.chunk.js.map",
+    "runtime-main.js": "/givers.github.io/static/js/runtime-main.7473ef65.js",
+    "runtime-main.js.map": "/givers.github.io/static/js/runtime-main.7473ef65.js.map",
     "static/css/2.fac6bf87.chunk.css": "/givers.github.io/static/css/2.fac6bf87.chunk.css",
-    "static/js/2.4ec8c2c3.chunk.js": "/givers.github.io/static/js/2.4ec8c2c3.chunk.js",
-    "static/js/2.4ec8c2c3.chunk.js.map": "/givers.github.io/static/js/2.4ec8c2c3.chunk.js.map",
-    "static/js/3.32b3b07e.chunk.js": "/givers.github.io/static/js/3.32b3b07e.chunk.js",
-    "static/js/3.32b3b07e.chunk.js.map": "/givers.github.io/static/js/3.32b3b07e.chunk.js.map",
+    "static/js/2.9a019b88.chunk.js": "/givers.github.io/static/js/2.9a019b88.chunk.js",
+    "static/js/2.9a019b88.chunk.js.map": "/givers.github.io/static/js/2.9a019b88.chunk.js.map",
+    "static/js/3.a908c11f.chunk.js": "/givers.github.io/static/js/3.a908c11f.chunk.js",
+    "static/js/3.a908c11f.chunk.js.map": "/givers.github.io/static/js/3.a908c11f.chunk.js.map",
     "index.html": "/givers.github.io/index.html",
     "static/css/2.fac6bf87.chunk.css.map": "/givers.github.io/static/css/2.fac6bf87.chunk.css.map",
     "static/css/main.8dcdc045.chunk.css.map": "/givers.github.io/static/css/main.8dcdc045.chunk.css.map",
-    "static/js/2.4ec8c2c3.chunk.js.LICENSE.txt": "/givers.github.io/static/js/2.4ec8c2c3.chunk.js.LICENSE.txt",
+    "static/js/2.9a019b88.chunk.js.LICENSE.txt": "/givers.github.io/static/js/2.9a019b88.chunk.js.LICENSE.txt",
     "static/media/check.css": "/givers.github.io/static/media/Roboto-Regular.a8d6ac03.ttf",
     "static/media/badminton_1.0436da33.jpg": "/givers.github.io/static/media/badminton_1.0436da33.jpg",
     "static/media/battle.08aefc08.png": "/givers.github.io/static/media/battle.08aefc08.png",
@@ -43,10 +43,10 @@
     "static/media/woman_run.609abc10.png": "/givers.github.io/static/media/woman_run.609abc10.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.456e692e.js",
+    "static/js/runtime-main.7473ef65.js",
     "static/css/2.fac6bf87.chunk.css",
-    "static/js/2.4ec8c2c3.chunk.js",
+    "static/js/2.9a019b88.chunk.js",
     "static/css/main.8dcdc045.chunk.css",
-    "static/js/main.db27d62b.chunk.js"
+    "static/js/main.5ae081f9.chunk.js"
   ]
 }
