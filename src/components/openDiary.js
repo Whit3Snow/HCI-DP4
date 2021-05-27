@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import '../style/openDiary.css';
 import ReactDOM, {render} from 'react-dom';
 import jQuery from "jquery";
@@ -6,31 +6,69 @@ import {db, firebaseApp, firebase} from '../firebase';
 import Menubar from './menu';
 
 var getid = 1;
-var currentid = 1;
-var icon1_lst = [{loc: [500, 500], set: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], link: 'https://firebasestorage.googleapis.com/v0/b/upload-e73b6.appspot.com/o/images%2Fbadminton_1.jpg?alt=media&token=211ec7e3-1e6d-4d5e-91ed-4153eed7c3c2', text: 'blabla'} ];
+var currentid = 10001;
+var countid1 = 0;
+var countid2 = 0;
+var countid3 = 0;
+var countid4 = 0;
+var countid5 = 0;
+var date;
+var title;
+var tag=[];
+
+
 function OpenDiary(props){
-    var size = 1900;
-    var zoom = window.innerWidth / size 
-    document.body.style.zoom = zoom;
     const name= props.location.state.group;
-    const id = props.match.params.id
+    const id = props.match.params.id;
+    const [load, setLoad] = useState(false);
     console.log(name,id);
     function read(){
         db.collection("Groups").doc(name).collection("Diary").doc(id).get()
         .then(function(doc){
             if (doc.exists){
-                let check = doc.data().icon_input[0]
-                console.log(check);
+                title = doc.data()["Title"];
+                date = doc.data()["Date"];
+                tag = doc.data()["Tag"]
+                for (var i = 0; i < doc.data().icon1_locate.length; i++){
+                    icon1(doc.data().icon1_input[i], doc.data().icon1_text, doc.data().icon1_img, parseInt(doc.data().icon1_locate[i]["x"])-150, doc.data().icon1_locate[i]["y"]);
+                }
+                for (var i = 0; i < doc.data().icon2_input.length; i++){
+                    icon2(doc.data().icon2_input[i],parseInt(doc.data().icon2_locate[i]["x"])-150, doc.data().icon2_locate[i]["y"]);
+                }
+                for (var i = 0; i < doc.data().icon3_input.length; i++){
+                    icon3(doc.data().icon3_input[i]["first"], doc.data().icon3_input[i]["second"], parseInt(doc.data().icon3_locate[i]["x"])-150, doc.data().icon3_locate[i]["y"]);
+                }
+                for (var i = 0; i < doc.data().icon4_input.length; i++){
+                    icon4(doc.data().icon4_input[i], parseInt(doc.data().icon4_locate[i]["x"])-150, doc.data().icon4_locate[i]["y"])
+                }
+                for (var i = 0; i < doc.data().icon5_input.length; i++){
+                    icon5(doc.data().icon5_input[i], parseInt(doc.data().icon5_locate[i]["x"])-150, doc.data().icon5_locate[i]["y"])
+                }
+                
             }
         })
     }
-
+    useEffect(()=>{
+        function some_info(){
+            db.collection("Groups").doc(name).collection("Diary").doc(id).get()
+            .then(function(doc){
+                if (doc.exists){
+                    title = doc.data()["Title"];
+                    date = doc.data()["Date"];
+                    tag = doc.data()["Tag"];
+                }
+                setLoad(true);
+            })
+        }
+        some_info();
+    },[])
+    if(!load) return (<div>loading</div>);
         return(
             <div>
                 <div class = "themediary">Diary</div>
                 <div class = "diarybone">
-                    <div class = "diarytitle" id = "diarytitle">Title</div>
-                    <div class = "writtenin">Written in</div><div class = "diarydate" id = "diarydate"> 2021.05.26 </div>
+                    <div class = "diarytitle" id = "diarytitle">{title}</div>
+                    <div class = "writtenin">Written in</div><div class = "diarydate" id = "diarydate"> {date.year}.{date.month}.{date.day} </div>
                     <div class = "boneline"></div>
                     <button class = "load" onClick = {()=>read()}>load</button>
                     <div class = "getcomponents">
@@ -82,69 +120,75 @@ function OpenDiary(props){
     }
 
 
-function icon1(){
-        
-    const comp = (
-        <div id = "stop" >
-            
-            <div class = "scoresheet" style = {{left: icon1_lst[0]["loc"][0], top: icon1_lst[0]["loc"][1]}}>
-                <div class = "putimg" id = "putimg">
-                    <img src = {icon1_lst[0]["link"]} alt = "firebase-image" class = "image1"/>
-                </div>
-                <table class = "set_comp" >
-                    <tr>
-                        <th class = "gamescore">Game score</th>
-                    </tr>
-                    <tr>
-                        <td class = "setnum">set1</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td><td width = "8px;" text-align = "center;">:</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td>
-                    </tr>
-                    <tr>
-                        <td class = "setnum">set2</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td><td>:</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td>
-                    </tr>
-                    <tr>
-                        <td class = "setnum">set3</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td><td>:</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td>
-                    </tr>
-                    <tr>
-                        <td class = "setnum">set4</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td><td>:</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td>
-                    </tr>
-                    <tr>
-                        <td class = "setnum">set5</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td><td>:</td><td class = "num_comp">{icon1_lst[0]["set"][0]}</td>
-                    </tr>
-                </table>
-                <div class = "analysis">
-                    <div class = "analysis_text">{icon1_lst[0]["text"]}</div>
+    function icon1(icon1lst, text, url, x, y){
+        const comp = (
+            <div id = "stop" >
+                <div class = "scoresheet" style = {{left: x, top: y}}>
+                    <div class = "putimg" id = "putimg">
+                        <img src = {url} alt = "firebase-image" class = "image1"/>
+                    </div>
+                    <table class = "set_comp" >
+                        <tr>
+                            <th class = "gamescore">Game score</th>
+                        </tr>
+                        <tr>
+                            <td class = "setnum">set1</td><td class = "num_comp">{icon1lst[0]}</td><td width = "8px;" text-align = "center;">:</td><td class = "num_comp">{icon1lst[1]}</td>
+                        </tr>
+                        <tr>
+                            <td class = "setnum">set2</td><td class = "num_comp">{icon1lst[2]}</td><td>:</td><td class = "num_comp">{icon1lst[3]}</td>
+                        </tr>
+                        <tr>
+                            <td class = "setnum">set3</td><td class = "num_comp">{icon1lst[4]}</td><td>:</td><td class = "num_comp">{icon1lst[5]}</td>
+                        </tr>
+                        <tr>
+                            <td class = "setnum">set4</td><td class = "num_comp">{icon1lst[6]}</td><td>:</td><td class = "num_comp">{icon1lst[7]}</td>
+                        </tr>
+                        <tr>
+                            <td class = "setnum">set5</td><td class = "num_comp">{icon1lst[8]}</td><td>:</td><td class = "num_comp">{icon1lst[9]}</td>
+                        </tr>
+                    </table>
+                    <div class = "analysis">
+                        <div class = "analysis_text">{text}</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+        
+        ReactDOM.render(comp, document.getElementById('component1'));
+        console.log(document.getElementById('stop').style.left)
+    }
+    function icon2(text, x, y){
+        const comp = (
+            <div class = "textboxes" style = {{left: x, top: y}}>{text}</div>
+        )
+        ReactDOM.render(comp, document.getElementById(currentid++));
+    }
+    function icon3(text1, text2, x, y){
+        const comp = (    
+            <div>
+                <div class = "textboxes2" style = {{left: x, top: y}}>
+                    <div>&nbsp;&nbsp;Active skills</div>
+                    <div class = "textboxes2-1" >{text1}</div>
+                    <br></br><br></br><br></br><br></br>
+                    <div>&nbsp;&nbsp;Points to supplement</div>
+                    <div class = "textboxes2-2" >{text2}</div>
+                </div>
+            </div>
+        );
+        ReactDOM.render(comp, document.getElementById(currentid++));
+    }
+    function icon4(text, x, y){
+        const comp = (
+            <div class = "textboxes3" style = {{left: x, top: y}}>{text}</div>
+        )
+        ReactDOM.render(comp, document.getElementById(currentid++));
+    }
+    function icon5(url, x, y){
+        const comp = (
+            <img src = {url} alt = "firebase-image" class = "imgonly" style = {{left: x, top: y}}/>
+        )
+        ReactDOM.render(comp, document.getElementById(currentid++));
+    }
     
-    ReactDOM.render(comp, document.getElementById('component1'));
-    console.log(document.getElementById('stop').style.left)
-}
-function icon2(text, x, y){
-    const comp = (
-        <div class = "textboxes" style = {{left: x, top: y}}>{text}</div>
-    )
-    ReactDOM.render(comp, document.getElementById(currentid++));
-}
-function icon3(text, x, y){
-    const comp = (
-        <div class = "textboxes2" style = {{left: x, top: y}}>{text}</div>
-    )
-    ReactDOM.render(comp, document.getElementById(currentid++));
-}
-function icon4(text, x, y){
-    const comp = (
-        <div class = "textboxes3" style = {{left: x, top: y}}>{text}</div>
-    )
-    ReactDOM.render(comp, document.getElementById(currentid++));
-}
-function icon5(url, x, y){
-    const comp = (
-        <img src = {url} alt = "firebase-image" class = "imgonly" style = {{left: x, top: y}}/>
-    )
-    ReactDOM.render(comp, document.getElementById(currentid++));
-}
-
-
-export default OpenDiary;
+    
+    export default OpenDiary;

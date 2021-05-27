@@ -58,7 +58,7 @@ var icon5_input = [];
 var icon5_locate = [];
 var icon5_field = [];
 
-
+var icon1_img = "";
 
 function textareaToVar(){
     console.log(icon2_input)
@@ -95,6 +95,12 @@ function textareaToVar(){
       console.log(valueInVar_3_2);
       icon3_field.push({first : valueInVar_3_1, second : valueInVar_3_2})
     }
+
+    for(var i = 0; i < icon5_input.length; i++){
+      icon5_field.push(icon5_input[i][1]);
+  }
+    
+
     
     
 }
@@ -105,9 +111,6 @@ function Component(props){
   const history = createBrowserHistory({forceRefresh: true });;
   console.log(history);
   const name= props.location.state.group;
-  var size = 2000;
-  var zoom = window.innerWidth / size 
-  document.body.style.zoom = zoom;
 
 
   db.collection("Groups")
@@ -170,6 +173,11 @@ function Component(props){
         console.log(icon4_locate[i]);
         icon_loc_4.push({x:icon4_locate[i][1][0] , y:icon4_locate[i][1][1]})
       }
+      for(var i=0 ; i < icon5_locate.length ; i++){
+        console.log(icon5_locate[i]);
+        icon_loc_5.push({x:icon5_locate[i][1][0] , y:icon5_locate[i][1][1]})
+      }
+
       console.log(icon_loc_4);
       console.log(icon4_input.length);
       console.log(icon4_field);
@@ -178,7 +186,7 @@ function Component(props){
               "Date": changing_date(date.toString()),
               "Title":title,
               "Tag":tags,
-              "Img": "", //어레이로 할껀데 일단 오류 방지를 위해 "" 해둔거임
+              "Img": url, //어레이로 할껀데 일단 오류 방지를 위해 "" 해둔거임
               "icon2_locate" : icon_loc_2,
               "icon2_input" : icon2_field,
               "icon1_locate" : icon1_locate,
@@ -190,7 +198,12 @@ function Component(props){
               "icon3_length" : icon3_input.length,
               "icon4_length" : icon4_input.length,
               "icon4_locate" : icon_loc_4,
-              "icon4_input" : icon4_field
+              "icon4_input" : icon4_field,
+              "icon5_input" : icon5_input,
+              "icon5_length" : icon5_input.length,
+              "icon5_locate" : icon_loc_5,
+              "icon1_img" : icon1_img
+              
 
       }).then(()=>{alert("success!!"); history.push({pathname :'/Diary/&', state : {group: name, user:props.location.state.user}});})
 
@@ -322,6 +335,8 @@ function Uploading(){
         alert("No Image Upload first");
     }
     else{
+        const url_1 = url1;
+        icon1_img = url_1;
         const comp = (
             <img src = {url1} alt = "firebase-image" class = "image1"/>
             );
@@ -343,7 +358,7 @@ function icon1(){
                 </div>
                 <table class = "set" >
                     <tr>
-                        <th class = "gamescore">Game score</th>
+                        <th class = "gamescore">Game score</th><td></td><td></td><td></td>
                     </tr>
                     <tr>
                         <td class = "setnum">set1</td><td><input class = "num" type = "text" id = {count_id1+1}></input></td><td width = "8px;" text-align = "center;">:</td><td><input class = "num" type = "text" id = {count_id1 + 2}></input></td>
@@ -375,18 +390,38 @@ function icon1(){
 }
 
 function delete1(){
-    const comp = (
-        <div></div>
-    )
-    ReactDOM.render(comp, document.getElementById('component1'));
+  const comp = (
+      <div></div>
+  )
+  ReactDOM.render(comp, document.getElementById('component1'));
+  icon1_input = [];
+  icon1_locate = [];
 }
 
 //---------------------------------------------------icon2----------------------------------------------------------//
 
-function delete2(thisid){
-    console.log(thisid);
-    ReactDOM.render(<div></div>, document.getElementById(thisid));
-    
+function delete2(thisid,count_id2){
+  console.log(thisid);
+  console.log(count_id2)
+  ReactDOM.render(<div></div>, document.getElementById(thisid));
+  for(let i = 0; i < icon2_input.length; i++) {
+    if(icon2_input[i] === count_id2 + 500)  {
+      console.log("in here")
+      icon2_input.splice(i, 1);
+      break;
+    }
+  }
+  console.log(icon2_input);
+  
+  for(let i = 0; i < icon2_locate.length; i++) {
+    if(icon2_locate[i][0] === count_id2)  {
+      console.log("in here")
+      icon2_locate.splice(i, 1);
+      break;
+    }
+  }
+  console.log(icon2_locate);
+
 }
 function icon2(){
     icon2_locate.push([count_id2,[0,0]])
@@ -450,35 +485,65 @@ function icon4(){
 
 //-------------------------------------------------icon5------------------------------------------------------//
 
-function Uploading2(){
-    if(!isEmpty){
-        alert("No Image Upload first");
-    }
-    else{
-        const comp = (
-            <img src = {url1} alt = "firebase-image" class = "image2"/>
-            );
-        ReactDOM.render(comp, document.getElementById('putimg2'));
-    }
+function Uploading2(i5){
+  if(!isEmpty){
+      alert("No Image Upload first");
+  }
+  else{
+      const url_5 = url1;
+      icon5_input.push(url_5);
+      const comp = (
+          <img src = {url1} alt = "firebase-image" class = "image2"/>
+          );
+      ReactDOM.render(comp, document.getElementById(i5));
+  }
 
 }
+
+// function delete5(thisid,count_id5){
+//   console.log(thisid);
+//   console.log(count_id5)
+//   ReactDOM.render(<div></div>, document.getElementById(thisid));
+//   for(let i = 0; i < icon5_input.length; i++) {
+//     if(icon5_input[i][0]== count_id5 + 10000)  {
+//       console.log("in here")
+//       icon5_input.splice(i, 1);
+//       break;
+//     }
+//   }
+//   console.log(icon5_input);
+
+//   for(let i = 0; i < icon5_locate.length; i++) {
+//     if(icon5_locate[i][0] === count_id5)  {
+//       console.log("in here")
+//       icon5_locate.splice(i, 1);
+//       break;
+//     }
+//   }
+//   console.log(icon5_locate);
+
+// }
 
 function icon5(){
-    const thisid = count_id;
-    const comp = (    
-        <div>
-            <div class = "imgonly"></div>
-            <div class = "draggable5" id = {count_id5} >D R A G</div>
-            <div class = "delete5"  onClick = {() => delete2(thisid)}>X</div>
-            <div id = "putimg2">
-                <div class = "addimg2" onClick = {()=>Uploading2()}>+</div>
-            </div>
-        </div>
-    );
-    count_id5++;
-    ReactDOM.render(comp, document.getElementById(count_id++));
+  const thisid = count_id;
+  icon5_locate.push([count_id5,[0,0]])
+  const id_5 = i5;
+  const count5 = count_id5;
+  const comp = (    
+      <div>
+          <div class = "imgonly"></div>
+          <div class = "draggable5" id = {count_id5} >D R A G</div>
+          <div class = "delete5"  onClick = {() => delete2(thisid)}>X</div>
+          <div id = {i5}>
+              <div class = "addimg2" onClick = {()=>Uploading2(id_5)}>+</div>
+          </div>
+      </div>
+  );
+  //icon2_input.push(i5);
+  i5++;
+  count_id5++;
+  ReactDOM.render(comp, document.getElementById(count_id++));
 }
-
 //---------------------------------------------------drag on-----------------------------------------------------//
 //---------------------------------------------------icon1--------------------------------------------------------//
 
@@ -1009,6 +1074,13 @@ document.addEventListener('mousedown', function(event) {
   
       console.log(getid, x, y);
   
+      for(var i = 0 ; i < icon5_locate.length; i++){
+        if(icon5_locate[i][0] == getid){
+            icon5_locate[i][1] = [x,y]
+        }
+      }
+  
+
       document.removeEventListener('mousemove', onMouseMove);
       dragElement.removeEventListener('mouseup', onMouseUp);
     }
