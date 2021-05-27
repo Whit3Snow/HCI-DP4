@@ -15,7 +15,7 @@ ID: kmin6381@kaist.ac.kr
 Pw: 222222  
 
 
-9 JavaScript File(Main feature implementation)
+9 JavaScript Files(Main feature implementation)
 --------------------------
 1. **Map.js**  
 Map.js is a file for maps on the group selection page. We implemented Map.js to check the tree size and information of our team's trees and other teams near our area.
