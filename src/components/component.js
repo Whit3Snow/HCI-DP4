@@ -1,8 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../style/component.css';
 import ReactDOM, {render} from 'react-dom';
 import jQuery from "jquery";
 import {storage, db, firebaseApp, firebase} from "../firebase";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 
@@ -134,6 +140,37 @@ function Component(){
 
   const name = "BADMINTON LOVERS";
 
+  const [open, setOpen] = React.useState(false);
+
+  const [mileage, setMileage] = useState(0);
+
+  const handleClickOpen = () => {
+      setOpen(true);
+  };
+
+  const handleClose = () => {
+
+      //console.log("dkdkdkdkdk");
+      setOpen(false);
+
+  };
+  useEffect( () => {
+
+    var docRef1 = db.collection("Groups").doc(name);
+
+    docRef1.get().then((doc) => {
+      // Document was found in the cache. If no cached document exists,
+      // an error will be returned to the 'catch' block below.
+      setMileage(doc.data().mileage);
+      console.log("Cached document data:", doc.data().mileage);
+  }).catch((error) => {
+      console.log("Error getting cached document:", error);
+  });
+
+  },[])
+
+
+
   const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState(""); //ok
   const [tag,setTag]=useState(""); //ok
@@ -199,8 +236,14 @@ function Component(){
               "icon5_locate" : icon_loc_5,
               "icon1_img" : icon1_img
 
-      }).then(()=>{alert("success!!");})
-
+      }).then(()=>{})
+      
+      var docRef1 = db.collection("Groups").doc(name);
+      handleClickOpen();
+      docRef1.update({
+        mileage:mileage+5000
+      });
+         
 
       
   }
@@ -236,7 +279,28 @@ function Component(){
 
         url1 = url;
         return(
+        
         <body>
+            <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title" >+5,000M</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+
+                Write the post! Good job!
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleClose} color="primary" autoFocus>
+                Get Mileage!
+            </Button>
+            
+            </DialogActions>
+            </Dialog>  
             <div class = "bar"></div>
             <input type = "text" class = "setTitle" placeholder = " Title"/>
             <input type = "text" class = "setTag"/>
