@@ -110,7 +110,7 @@ function textareaToVar(){
         
 
     }
-    console.log("dkfjsldfkjlsdkfjl")
+
     for(var k = 0; k < icon3_input.length; k++){
       console.log(icon3_input)
       var valueInVar_3_1 = document.getElementById(icon3_input[k].first).value;
@@ -122,7 +122,7 @@ function textareaToVar(){
     
     for(var i = 0; i < icon5_input.length; i++){
       icon5_field.push(icon5_input[i][1]);
-  }
+    }
     
 }
 
@@ -132,7 +132,7 @@ function Component(){
 
   db.collection("Groups")
 
-  const name = "HELLO BADMINTON";
+  const name = "BADMINTON LOVERS";
 
   const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState(""); //ok
@@ -194,7 +194,7 @@ function Component(){
               "icon4_length" : icon4_input.length,
               "icon4_locate" : icon_loc_4,
               "icon4_input" : icon4_field,
-              "icon5_input" : icon5_input,
+              "icon5_input" : icon5_field,
               "icon5_length" : icon5_input.length,
               "icon5_locate" : icon_loc_5,
               "icon1_img" : icon1_img
@@ -536,13 +536,13 @@ function icon4(){
 
 //-------------------------------------------------icon5------------------------------------------------------//
 
-function Uploading2(i5){
+function Uploading2(i5){//i5는 
     if(!isEmpty){
         alert("No Image Upload first");
     }
     else{
         const url_5 = url1
-        icon5_input.push(url_5);
+        icon5_input.push([i5,url_5]);
         const comp = (
             <img src = {url1} alt = "firebase-image" class = "image2"/>
             );
@@ -551,29 +551,29 @@ function Uploading2(i5){
 
 }
 
-// function delete5(thisid,count_id5){
-//   console.log(thisid);
-//   console.log(count_id5)
-//   ReactDOM.render(<div></div>, document.getElementById(thisid));
-//   for(let i = 0; i < icon5_input.length; i++) {
-//     if(icon5_input[i][0]== count_id5 + 10000)  {
-//       console.log("in here")
-//       icon5_input.splice(i, 1);
-//       break;
-//     }
-//   }
-//   console.log(icon5_input);
+function delete5(thisid,count_id5){
+  console.log(thisid);
+  console.log(count_id5)
+  ReactDOM.render(<div></div>, document.getElementById(thisid));
+  for(let i = 0; i < icon5_input.length; i++) {
+    if(icon5_input[i][0]== count_id5 + 10000)  {
+      console.log("in here")
+      icon5_input.splice(i, 1);
+      break;
+    }
+  }
+  console.log(icon5_input);
   
-//   for(let i = 0; i < icon5_locate.length; i++) {
-//     if(icon5_locate[i][0] === count_id5)  {
-//       console.log("in here")
-//       icon5_locate.splice(i, 1);
-//       break;
-//     }
-//   }
-//   console.log(icon5_locate);
+  for(let i = 0; i < icon5_locate.length; i++) {
+    if(icon5_locate[i][0] === count_id5)  {
+      console.log("in here")
+      icon5_locate.splice(i, 1);
+      break;
+    }
+  }
+  console.log(icon5_locate);
 
-// }
+}
 
 function icon5(){
     const thisid = count_id;
@@ -584,7 +584,7 @@ function icon5(){
         <div>
             <div class = "imgonly"></div>
             <div class = "draggable5" id = {count_id5} >D R A G</div>
-            <div class = "delete5"  onClick = {() => delete2(thisid)}>X</div>
+            <div class = "delete5"  onClick = {() => delete5(thisid, count5)}>X</div>
             <div id = {i5}>
                 <div class = "addimg2" onClick = {()=>Uploading2(id_5)}>+</div>
             </div>
